@@ -39,3 +39,22 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.book-list {
+  text-align: left;
+}
+
+.book-list li {
+  list-style-type: none;
+  font-size: 32px;
+}
+
+.book-title {
+  display: block;
+  font-size: 20px;
+}
+
+.book-author {
+  display: block;
+  font-size: 10px;
+}
