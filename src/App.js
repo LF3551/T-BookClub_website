@@ -1,13 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 import t_logo from './images/logo.png';
 
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
   const [expandedUsers, setExpandedUsers] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupUser, setPopupUser] = useState(null);
+  const popupRef = useRef(null);
 
   useEffect(() => {
     fetchHallOfFameData();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setShowPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const fetchHallOfFameData = async () => {
@@ -28,6 +44,16 @@ function App() {
     }
   };
 
+  const togglePopup = (user) => {
+    if (showPopup && popupUser === user) {
+      setShowPopup(false);
+      setPopupUser(null);
+    } else {
+      setShowPopup(true);
+      setPopupUser(user);
+    }
+  };
+
   const sortedData = hallOfFameData.sort((a, b) => b['Появления'] - a['Появления']);
 
   return (
@@ -42,8 +68,7 @@ function App() {
             <tr>
               <th>Speaking Rank</th>
               <th>Speaker</th>
-              <th>Books</th>
-
+              <th>Toggle с книгами</th>
             </tr>
           </thead>
           <tbody>
@@ -52,7 +77,7 @@ function App() {
                 <td>{user['Появления']}</td>
                 <td>{user['Пользователь']}</td>
                 <td>
-                  <button onClick={() => toggleUserExpansion(user)}>Toggle</button>
+                  <button onClick={() => togglePopup(user)}>Toggle</button>
                 </td>
                 <td>
                   {expandedUsers.includes(user) && (
@@ -70,9 +95,31 @@ function App() {
             ))}
           </tbody>
         </table>
+
+        {showPopup && (
+          <div className="popup-container">
+            <div ref={popupRef} className="popup">
+              {popupUser && (
+                <div className="popup-content">
+                  <p className="popup-user">{popupUser['Пользователь']}</p>
+                  <ul className="book-list">
+                    {popupUser['Книги_Авторы'].map((bookAuthor, index) => (
+                      <li key={index}>
+                        <span className="book-title">Book: {bookAuthor.Книга}</span>
+                        <span className="book-author">Author: {bookAuthor.Автор}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
     </div>
   );
 }
 
 export default App;
+
+
