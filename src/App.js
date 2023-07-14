@@ -1,30 +1,96 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 import t_logo from './images/logo.png';
-
+import rank1 from './images/1.png';
+import rank2 from './images/2.png';
+import rank3 from './images/3.png';
+import rank4 from './images/4.png';
+import rank5 from './images/5.png';
+import rank6 from './images/6.png';
+import rank7 from './images/7.png';
+import rank8 from './images/8.png';
+import rank9 from './images/9.png';
+import rank10 from './images/10.png';
+import aboutRanksImage from './images/ranking.png';
+import bookbutton from './images/book_button.png';
+const rankImages = {
+  1: rank1,
+  2: rank2,
+  3: rank3,
+  4: rank4,
+  5: rank5,
+  6: rank6,
+  7: rank7,
+  8: rank8,
+  9: rank9,
+  10: rank10,
+};
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
   const [expandedUsers, setExpandedUsers] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [popupUser, setPopupUser] = useState(null);
+  const [showAboutPopup, setShowAboutPopup] = useState(false);
   const popupRef = useRef(null);
+  const aboutRanksRef = useRef(null);
+  const [cursorX, setCursorX] = useState(0);
+  const [cursorY, setCursorY] = useState(0);
+  const [popupOffsetX, setPopupOffsetX] = useState(0);
+  const [popupOffsetY, setPopupOffsetY] = useState(0);
+  
 
   useEffect(() => {
     fetchHallOfFameData();
   }, []);
-
+  
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setShowPopup(false);
+    const handleClickOutsideAboutRanks = (event) => {
+      if (aboutRanksRef.current && !aboutRanksRef.current.contains(event.target)) {
+        setShowAboutPopup(false);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+  
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape') {
+        setShowAboutPopup(false);
+      }
     };
-  }, []);
+  
+    document.addEventListener('mousedown', handleClickOutsideAboutRanks);
+    document.addEventListener('keydown', handleEscapeKey);
+  
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideAboutRanks);
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [aboutRanksRef]);
+
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      (popupRef.current && !popupRef.current.contains(event.target)) &&
+      (aboutRanksRef.current && !aboutRanksRef.current.contains(event.target))
+    ) {
+      setShowPopup(false);
+      setShowAboutPopup(false);
+    }
+  };
+
+  const handleEscapeKey = (event) => {
+    if (event.key === 'Escape') {
+      setShowPopup(false);
+      setShowAboutPopup(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  document.addEventListener('keydown', handleEscapeKey);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+    document.removeEventListener('keydown', handleEscapeKey);
+  };
+}, [popupRef, aboutRanksRef]);
 
   const fetchHallOfFameData = async () => {
     try {
@@ -36,23 +102,29 @@ function App() {
     }
   };
 
-  const toggleUserExpansion = (user) => {
-    if (expandedUsers.includes(user)) {
-      setExpandedUsers((prevState) => prevState.filter((u) => u !== user));
-    } else {
-      setExpandedUsers((prevState) => [...prevState, user]);
-    }
-  };
-
-  const togglePopup = (user) => {
+  const togglePopup = (user, event) => {
     if (showPopup && popupUser === user) {
       setShowPopup(false);
       setPopupUser(null);
     } else {
+      if (event) {
+        const offsetX = event.clientX - event.target.getBoundingClientRect().width - 200;
+        const offsetY = event.clientY - event.target.getBoundingClientRect().height + 102;
+        setPopupOffsetX(offsetX);
+        setPopupOffsetY(offsetY);
+      }
       setShowPopup(true);
+      setShowAboutPopup(false);
       setPopupUser(user);
     }
   };
+
+  const handleAboutRanksClick = () => {
+    setShowAboutPopup((prevState) => !prevState);
+    setShowPopup(false);
+    setPopupUser(null);
+  };
+
 
   const sortedData = hallOfFameData.sort((a, b) => b['Появления'] - a['Появления']);
 
@@ -62,22 +134,33 @@ function App() {
         <img src={t_logo} className="App-logo" alt="logo" />
         <h1>Welcome to the T-Book Club!</h1>
         <p>Our Hall of Fame</p>
+        <div ref={aboutRanksRef} className="about-ranks-container">
+        <img
+          src={aboutRanksImage}
+          alt="About Ranks"
+          className="about-ranks-image"
+          onClick={handleAboutRanksClick}
+          ref={aboutRanksRef}
+        />
+        </div>
 
         <table>
           <thead>
             <tr>
               <th>Speaking Rank</th>
               <th>Speaker</th>
-              <th>Toggle с книгами</th>
+              <th>Books</th>
             </tr>
           </thead>
           <tbody>
-            {sortedData.map((user, index) => (
+          {sortedData.map((user, index) => (
               <tr key={index}>
-                <td>{user['Появления']}</td>
+                <td><img src={rankImages[user['Появления']]} alt={`Rank ${user['Появления']}`} className="rank-icon" width="50" /></td>
                 <td>{user['Пользователь']}</td>
                 <td>
-                  <button onClick={() => togglePopup(user)}>Toggle</button>
+                <button onClick={(event) => togglePopup(user, event)} style={{ background: 'none', border: 'none', padding: '0' }}>
+                  <img src={bookbutton} alt="Book of user" width="30" />
+                </button>
                 </td>
                 <td>
                   {expandedUsers.includes(user) && (
@@ -96,22 +179,93 @@ function App() {
           </tbody>
         </table>
 
-        {showPopup && (
-          <div className="popup-container">
-            <div ref={popupRef} className="popup">
-              {popupUser && (
-                <div className="popup-content">
-                  <p className="popup-user">{popupUser['Пользователь']}</p>
-                  <ul className="book-list">
-                    {popupUser['Книги_Авторы'].map((bookAuthor, index) => (
-                      <li key={index}>
-                        <span className="book-title">Book: {bookAuthor.Книга}</span>
-                        <span className="book-author">Author: {bookAuthor.Автор}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+        {showPopup && popupUser && (
+    <div className="popup-container" style={{ top: cursorY + popupOffsetY, left: cursorX + popupOffsetX }}>
+      <div ref={popupRef} className="popup" style={{ maxWidth: '300px' }}>
+        <div className="popup-content">
+          <p className="popup-user">{popupUser['Пользователь']}</p>
+          <ul className="book-list" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+            {popupUser['Книги_Авторы'].map((bookAuthor, index) => (
+              <li key={index}>
+                <span className="book-title">Book: {bookAuthor.Книга}</span>
+                <span className="book-author">Author: {bookAuthor.Автор}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  )}
+
+        {showAboutPopup && (
+          <div className="about-popup-container">
+            <div className="about-popup">
+              <div className="popup-content">
+              <div className="about-popup-content">
+                <h3>Our Ranks:</h3>
+                <table className="ranks-table">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Description</th>
+                      <th>Number of Speeches</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><img src={rank1} alt="Rank 1" width="50" /></td>
+                      <td>The Bookworm Novice</td>
+                      <td>1 speech</td>
+                    </tr>
+                    <tr>
+                    <td><img src={rank2} alt="Rank 2" width="50" /></td>
+                      <td>The Literary Explorer</td>
+                      <td>2 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank3} alt="Rank 3" width="50" /></td>
+                      <td>The Book Enthusiast</td>
+                      <td>3 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank4} alt="Rank 4" width="50" /></td>
+                      <td>The Verbal Voyager</td>
+                      <td>4 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank5} alt="Rank 5" width="50" /></td>
+                      <td>The Literary Expert</td>
+                      <td>5 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank6} alt="Rank 6" width="50" /></td>
+                      <td>The Book Master</td>
+                      <td>6 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank7} alt="Rank 7" width="50" /></td>
+                      <td>The Literary Guru</td>
+                      <td>7 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank8} alt="Rank 8" width="50" /></td>
+                      <td>The Book Wizard</td>
+                      <td>8 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank9} alt="Rank 9" width="50" /></td>
+                      <td>The Literary Virtuoso</td>
+                      <td>9 speeches</td>
+                    </tr>
+                    <tr>
+                      <td><img src={rank10} alt="Rank 3" width="50" /></td>
+                      <td>The Book Magician</td>
+                      <td>10 speeches</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              </div>
             </div>
           </div>
         )}
@@ -121,5 +275,3 @@ function App() {
 }
 
 export default App;
-
-
