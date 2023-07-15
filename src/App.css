@@ -180,3 +180,27 @@ body {
 .rank-icon:hover {
   transform: rotate(-15deg);
 }
+.column-header {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header-content {
+  margin-left: 45px; /* Adjust the margin as needed */
+}
+
+.speaker-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.speaker-header {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 10px;
+}

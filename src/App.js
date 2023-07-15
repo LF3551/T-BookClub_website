@@ -147,16 +147,20 @@ function App() {
         <table>
           <thead>
             <tr>
-              <th>Speaking Rank</th>
-              <th>Speaker</th>
-              <th>Books</th>
+              <th>Rank</th>
+              <th className="speaker-header">Speaker</th>
+              <th>
+                <div className="column-header">
+                  <div className="header-content">Books</div>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
           {sortedData.map((user, index) => (
               <tr key={index}>
                 <td><img src={rankImages[user['Появления']]} alt={`Rank ${user['Появления']}`} className="rank-icon" width="50" /></td>
-                <td>{user['Пользователь']}</td>
+                <td className="speaker-column">{user['Пользователь']}</td>
                 <td>
                 <button onClick={(event) => togglePopup(user, event)} style={{ background: 'none', border: 'none', padding: '0' }}>
                   <img src={bookbutton} alt="Book of user" width="30" />
