@@ -45,7 +45,7 @@ app.get('/hall-of-fame', async (req, res) => {
         // Например, чтение данных из таблицы
         const response = await sheets.spreadsheets.values.get({
           spreadsheetId: '1Vlm9rD2NoO0LO1UczYjTU5bPSd214LrwcpDtmjm5IDI',
-          range: 'halloffame!C2:E',
+          range: 'halloffame!C2:F',
         });
 
         const rows = response.data.values;
@@ -62,11 +62,13 @@ app.get('/hall-of-fame', async (req, res) => {
         const usersData = uniqueUsers.map(user => {
           const userBooks = [];
           const userAuthors = [];
+          const userImages = []; 
 
           rows.forEach(row => {
             if (row[0] === user && !userBooks.includes(row[1]) && !userAuthors.includes(row[2])) {
               userBooks.push(row[1]);
               userAuthors.push(row[2]);
+              userImages.push(row[3]); 
             }
           });
 
@@ -76,7 +78,8 @@ app.get('/hall-of-fame', async (req, res) => {
             'Появления': rows.filter(row => row[0] === user).length,
             'Книги_Авторы': userBooks.map((book, index) => ({
               'Книга': book,
-              'Автор': userAuthors[index]
+              'Автор': userAuthors[index],
+              'Изображение': userImages[index] 
             }))
           };
         });

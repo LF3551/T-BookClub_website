@@ -1,30 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
-import t_logo from './images/logo.png';
-import rank1 from './images/1.png';
-import rank2 from './images/2.png';
-import rank3 from './images/3.png';
-import rank4 from './images/4.png';
-import rank5 from './images/5.png';
-import rank6 from './images/6.png';
-import rank7 from './images/7.png';
-import rank8 from './images/8.png';
-import rank9 from './images/9.png';
-import rank10 from './images/10.png';
-import aboutRanksImage from './images/ranking.png';
-import bookbutton from './images/book_button.png';
-const rankImages = {
-  1: rank1,
-  2: rank2,
-  3: rank3,
-  4: rank4,
-  5: rank5,
-  6: rank6,
-  7: rank7,
-  8: rank8,
-  9: rank9,
-  10: rank10,
-};
+import images from './images';
+const rankImages = {};
+for (let i = 1; i <= 10; i++) {
+  rankImages[i] = images[`rank${i}`];
+}
+
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
   const [expandedUsers, setExpandedUsers] = useState([]);
@@ -131,12 +112,12 @@ function App() {
   return (
     <div className="App" style={{ backgroundColor: 'blue' }}>
       <header className="App-header">
-        <img src={t_logo} className="App-logo" alt="logo" />
+        <img src={images.t_logo} className="App-logo" alt="logo" />
         <h1>Welcome to the T-Book Club!</h1>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
         <img
-          src={aboutRanksImage}
+          src={images.aboutRanksImage}
           alt="About Ranks"
           className="about-ranks-image"
           onClick={handleAboutRanksClick}
@@ -163,7 +144,7 @@ function App() {
                 <td className="speaker-column">{user['Пользователь']}</td>
                 <td>
                 <button onClick={(event) => togglePopup(user, event)} style={{ background: 'none', border: 'none', padding: '0' }}>
-                  <img src={bookbutton} alt="Book of user" width="30" />
+                  <img src={images.bookbutton} alt="Book of user" width="30" />
                 </button>
                 </td>
                 <td>
@@ -217,52 +198,52 @@ function App() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td><img src={rank1} alt="Rank 1" width="50" /></td>
+                      <td><img src={images.rank1} alt="Rank 1" width="50" /></td>
                       <td>The Bookworm Novice</td>
                       <td>1 speech</td>
                     </tr>
                     <tr>
-                    <td><img src={rank2} alt="Rank 2" width="50" /></td>
+                    <td><img src={images.rank2} alt="Rank 2" width="50" /></td>
                       <td>The Literary Explorer</td>
                       <td>2 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank3} alt="Rank 3" width="50" /></td>
+                      <td><img src={images.rank3} alt="Rank 3" width="50" /></td>
                       <td>The Book Enthusiast</td>
                       <td>3 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank4} alt="Rank 4" width="50" /></td>
+                      <td><img src={images.rank4} alt="Rank 4" width="50" /></td>
                       <td>The Verbal Voyager</td>
                       <td>4 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank5} alt="Rank 5" width="50" /></td>
+                      <td><img src={images.rank5} alt="Rank 5" width="50" /></td>
                       <td>The Literary Expert</td>
                       <td>5 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank6} alt="Rank 6" width="50" /></td>
+                      <td><img src={images.rank6} alt="Rank 6" width="50" /></td>
                       <td>The Book Master</td>
                       <td>6 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank7} alt="Rank 7" width="50" /></td>
+                      <td><img src={images.rank7} alt="Rank 7" width="50" /></td>
                       <td>The Literary Guru</td>
                       <td>7 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank8} alt="Rank 8" width="50" /></td>
+                      <td><img src={images.rank8} alt="Rank 8" width="50" /></td>
                       <td>The Book Wizard</td>
                       <td>8 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank9} alt="Rank 9" width="50" /></td>
+                      <td><img src={images.rank9} alt="Rank 9" width="50" /></td>
                       <td>The Literary Virtuoso</td>
                       <td>9 speeches</td>
                     </tr>
                     <tr>
-                      <td><img src={rank10} alt="Rank 3" width="50" /></td>
+                      <td><img src={images.rank10} alt="Rank 3" width="50" /></td>
                       <td>The Book Magician</td>
                       <td>10 speeches</td>
                     </tr>
