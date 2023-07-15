@@ -11,9 +11,14 @@ import rank9 from './images/9.png';
 import rank10 from './images/10.png';
 import aboutRanksImage from './images/ranking.png';
 import bookbutton from './images/book_button.png';
-
+import linkedinbutton from './images/ln.png';
+import instagrambutton from './images/in.png';
+import emailbutton from './images/em.png';
 const images = {
   t_logo,
+  linkedinbutton,
+  instagrambutton,
+  emailbutton,
   rank1,
   rank2,
   rank3,
