@@ -1,8 +1,8 @@
 {
     "functions": {
-      "api/hall-of-fame.js": {
-        "runtime": "vercel-node@1",
-        "memory": 512
+      "api/hall-of-fame": {
+        "handler": "api/hall-of-fame.app",
+        "memory": 1024
       }
     }
   }
