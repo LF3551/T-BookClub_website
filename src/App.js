@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 import images from './images';
 import RanksTable from './RanksTable';
+import { serverPort } from './config';
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
@@ -64,7 +65,7 @@ function App() {
 
   const fetchHallOfFameData = async () => {
     try {
-      const response = await fetch('http://localhost:3006/hall-of-fame');
+      const response = await fetch(`http://localhost:${serverPort}/hall-of-fame`);
       const data = await response.json();
       setHallOfFameData(data);
     } catch (error) {
