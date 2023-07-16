@@ -1,0 +1,12 @@
+{
+    "routes": [
+      {
+        "src": "/hall-of-fame",
+        "dest": "/server.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/app.js"
+      }
+    ]
+  }
