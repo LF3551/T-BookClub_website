@@ -43,8 +43,7 @@ function App() {
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const aboutRanksRef = useRef(null);
-  const [bookButtonActive, setBookButtonActive] = useState(false);
-  
+
   useEffect(() => {
     fetchHallOfFameData();
   }, []);
@@ -81,14 +80,12 @@ function App() {
     }
   };
 
-  const handleBookButtonClick = () => {
-    setBookButtonActive(true);
-    // Other button click logic...
-  };
-
-  const handleBookButtonRelease = () => {
-    setBookButtonActive(false);
-    // Other button release logic...
+  const handleBookButtonClick = (user) => {
+    if (expandedUser === user) {
+      setExpandedUser(null);
+    } else {
+      setExpandedUser(user);
+    }
   };
 
   const handleImageClick = (image) => {
@@ -140,12 +137,11 @@ function App() {
                   <td className="speaker-column">{user['Пользователь']}</td>
                   <td>
                   <button
-                    onClick={handleBookButtonClick}
-                    onMouseUp={handleBookButtonRelease}
-                    className={`book-button ${bookButtonActive ? 'active' : ''}`}
-                  >
-                    <img src={images.bookbutton} alt="Book of user" width="30" />
-                  </button>
+                onClick={() => handleBookButtonClick(user)}
+                className={`book-button ${expandedUser === user ? 'expanded' : ''}`}
+              >
+                <img src={images.bookbutton} alt="Book of user" width="30" />
+              </button>
                   </td>
                 </tr>
                 {expandedUser === user && (

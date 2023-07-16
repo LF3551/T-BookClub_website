@@ -158,9 +158,11 @@ body {
 }
 
 .book-button {
+  background: none;
+  border: none;
+  padding: 0;
   transition: transform 0.2s, filter 0.2s;
 }
-
 
 .book-button.animated {
   transform: scale(0.9);
@@ -351,7 +353,7 @@ table {
   filter: brightness(0.8); /* Reduce brightness when active */
 }
 
-.book-button.active {
-  transform: scale(0.95);
-  filter: brightness(0.8);
+.book-button:active {
+  transform: translateY(2px); /* Move the button down when active */
+  filter: brightness(0.8); /* Reduce brightness when active */
 }
