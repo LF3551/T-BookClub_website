@@ -158,8 +158,9 @@ body {
 }
 
 .book-button {
-  transition: transform 0.2s ease;
+  transition: transform 0.2s, filter 0.2s;
 }
+
 
 .book-button.animated {
   transform: scale(0.9);
@@ -326,4 +327,31 @@ table {
 
 .footer-text {
   font-size: 12px;
+}
+
+.button-linkedin:hover,
+.button-linkedin:active {
+  filter: brightness(0.8); /* Reduce brightness on hover and click */
+}
+
+.button-instagram:hover,
+.button-instagram:active {
+  filter: brightness(0.8); /* Reduce brightness on hover and click */
+}
+
+.button-email:hover,
+.button-email:active {
+  filter: brightness(0.8); /* Reduce brightness on hover and click */
+}
+
+.button-linkedin:active,
+.button-instagram:active,
+.button-email:active {
+  transform: translateY(2px); /* Move the button down when active */
+  filter: brightness(0.8); /* Reduce brightness when active */
+}
+
+.book-button.active {
+  transform: scale(0.95);
+  filter: brightness(0.8);
 }

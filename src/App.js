@@ -10,33 +10,41 @@ for (let i = 1; i <= 10; i++) {
 }
 function Footer() {
   return (
-<footer className="footer">
-  <div className="footer-content">
-    <div className="footer-buttons">
-      <a href="https://www.linkedin.com/in/aleksei-aleinikov-78195911a/" target="_blank" rel="noopener noreferrer">
-        <img src={images.linkedinbutton} alt="LinkedIn" />
-      </a>
-      <a href="https://www.instagram.com/a1eksey_gr/" target="_blank" rel="noopener noreferrer">
-        <img src={images.instagrambutton} alt="Instagram" />
-      </a>
-      <a href="mailto:adk3551@gmail.com">
-        <img src={images.emailbutton} alt="Email" />
-      </a>
-    </div>
-    <p className="footer-text">
-      &copy; {new Date().getFullYear()} T-Book Club. All rights reserved.
-    </p>
-  </div>
-</footer>
+    <footer className="footer">
+      <div className="footer-content">
+        <div className="footer-buttons">
+          <div className="connect-wrapper">
+            <p className="connect-text">Let's Connect:</p>
+            <div className="buttons-container">
+              <a href="https://www.linkedin.com/in/aleksei-aleinikov-78195911a/" target="_blank" rel="noopener noreferrer">
+                <img className="button-linkedin" src={images.linkedinbutton} alt="LinkedIn" />
+              </a>
+              <a href="https://www.instagram.com/a1eksey_gr/" target="_blank" rel="noopener noreferrer">
+                <img className="button-instagram" src={images.instagrambutton} alt="Instagram" />
+              </a>
+              <a href="mailto:adk3551@gmail.com">
+                <img className="button-email" src={images.emailbutton} alt="Email" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <p className="footer-text">
+          &copy; {new Date().getFullYear()} T-Book Club. All rights reserved.
+        </p>
+      </div>
+    </footer>
   );
 }
+
+
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
   const [expandedUser, setExpandedUser] = useState(null);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const aboutRanksRef = useRef(null);
-
+  const [bookButtonActive, setBookButtonActive] = useState(false);
+  
   useEffect(() => {
     fetchHallOfFameData();
   }, []);
@@ -73,12 +81,14 @@ function App() {
     }
   };
 
-  const handleBookButtonClick = (user) => {
-    if (expandedUser === user) {
-      setExpandedUser(null);
-    } else {
-      setExpandedUser(user);
-    }
+  const handleBookButtonClick = () => {
+    setBookButtonActive(true);
+    // Other button click logic...
+  };
+
+  const handleBookButtonRelease = () => {
+    setBookButtonActive(false);
+    // Other button release logic...
   };
 
   const handleImageClick = (image) => {
@@ -129,12 +139,13 @@ function App() {
                   </td>
                   <td className="speaker-column">{user['Пользователь']}</td>
                   <td>
-                    <button
-                      onClick={() => handleBookButtonClick(user)}
-                      style={{ background: 'none', border: 'none', padding: '0' }}
-                    >
-                      <img src={images.bookbutton} alt="Book of user" width="30" />
-                    </button>
+                  <button
+                    onClick={handleBookButtonClick}
+                    onMouseUp={handleBookButtonRelease}
+                    className={`book-button ${bookButtonActive ? 'active' : ''}`}
+                  >
+                    <img src={images.bookbutton} alt="Book of user" width="30" />
+                  </button>
                   </td>
                 </tr>
                 {expandedUser === user && (
