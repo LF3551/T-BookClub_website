@@ -18,8 +18,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/hall-of-fame', async (req, res) => {
   try {
     const { google } = require('googleapis');
-    const keys = JSON.parse(process.env.KEYS_JSON);
-    // const keys = require('./keys.json'); 
+    // const keys = JSON.parse(process.env.KEYS_JSON);
+    const keys = require('./keys.json'); 
 
     // Аутентификация с использованием ключей доступа
     const client = new google.auth.JWT(
