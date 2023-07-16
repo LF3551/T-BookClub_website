@@ -65,7 +65,7 @@ function App() {
 
   const fetchHallOfFameData = async () => {
     try {
-      const response = await fetch(`http://localhost:${serverPort}/hall-of-fame`);
+      const response = await fetch(`https://t-book-club-server-lf3551.vercel.app/hall-of-fame`);
       const data = await response.json();
       setHallOfFameData(data);
     } catch (error) {
