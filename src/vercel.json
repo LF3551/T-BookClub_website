@@ -1,8 +1,12 @@
 {
+    "rewrites": [
+      { "source": "/api/(.*)", "destination": "/api/$1" },
+      { "source": "/(.*)", "destination": "/$1" }
+    ],
     "functions": {
-      "api/hall-of-fame": {
-        "handler": "api/hall-of-fame.app",
-        "memory": 1024
+      "api/*": {
+        "memory": 512,
+        "maxDuration": 10
       }
     }
   }
