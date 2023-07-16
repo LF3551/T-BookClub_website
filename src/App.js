@@ -7,19 +7,34 @@ const rankImages = {};
 for (let i = 1; i <= 10; i++) {
   rankImages[i] = images[`rank${i}`];
 }
-
+function Footer() {
+  return (
+<footer className="footer">
+  <div className="footer-content">
+    <div className="footer-buttons">
+      <a href="https://www.linkedin.com/in/aleksei-aleinikov-78195911a/" target="_blank" rel="noopener noreferrer">
+        <img src={images.linkedinbutton} alt="LinkedIn" />
+      </a>
+      <a href="https://www.instagram.com/a1eksey_gr/" target="_blank" rel="noopener noreferrer">
+        <img src={images.instagrambutton} alt="Instagram" />
+      </a>
+      <a href="mailto:adk3551@gmail.com">
+        <img src={images.emailbutton} alt="Email" />
+      </a>
+    </div>
+    <p className="footer-text">
+      &copy; {new Date().getFullYear()} T-Book Club. All rights reserved.
+    </p>
+  </div>
+</footer>
+  );
+}
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
-  const [expandedUsers, setExpandedUsers] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupUser, setPopupUser] = useState(null);
+  const [expandedUser, setExpandedUser] = useState(null);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
-  const popupRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const aboutRanksRef = useRef(null);
-  const [cursorX, setCursorX] = useState(0);
-  const [cursorY, setCursorY] = useState(0);
-  const [popupOffsetX, setPopupOffsetX] = useState(0);
-  const [popupOffsetY, setPopupOffsetY] = useState(0);
 
   useEffect(() => {
     fetchHallOfFameData();
@@ -47,33 +62,6 @@ function App() {
     };
   }, [aboutRanksRef]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        (popupRef.current && !popupRef.current.contains(event.target)) &&
-        (aboutRanksRef.current && !aboutRanksRef.current.contains(event.target))
-      ) {
-        setShowPopup(false);
-        setShowAboutPopup(false);
-      }
-    };
-
-    const handleEscapeKey = (event) => {
-      if (event.key === 'Escape') {
-        setShowPopup(false);
-        setShowAboutPopup(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEscapeKey);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [popupRef, aboutRanksRef]);
-
   const fetchHallOfFameData = async () => {
     try {
       const response = await fetch('http://localhost:3006/hall-of-fame');
@@ -84,43 +72,32 @@ function App() {
     }
   };
 
-  const togglePopup = (user, event) => {
-    if (showPopup && popupUser === user) {
-      setShowPopup(false);
-      setPopupUser(null);
+  const handleBookButtonClick = (user) => {
+    if (expandedUser === user) {
+      setExpandedUser(null);
     } else {
-      if (event) {
-        const offsetX = event.clientX - event.target.getBoundingClientRect().width - 200;
-        const offsetY = event.clientY - event.target.getBoundingClientRect().height + 102;
-        setPopupOffsetX(offsetX);
-        setPopupOffsetY(offsetY);
-      }
-      setShowPopup(true);
-      setShowAboutPopup(false);
-      setPopupUser(user);
+      setExpandedUser(user);
     }
   };
 
-  const handleAboutRanksClick = () => {
-    setShowAboutPopup((prevState) => !prevState);
-    setShowPopup(false);
-    setPopupUser(null);
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
   };
 
   const sortedData = hallOfFameData.sort((a, b) => b['Появления'] - a['Появления']);
 
   return (
-    <div className="App" style={{ backgroundColor: 'blue' }}>
+    <div className="App">
       <header className="App-header">
         <img src={images.t_logo} className="App-logo" alt="logo" />
-        <h1>Welcome to the T-Book Club!</h1>
+        <h1>Welcome to the T-Book Club</h1>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
           <img
             src={images.aboutRanksImage}
             alt="About Ranks"
             className="about-ranks-image"
-            onClick={handleAboutRanksClick}
+            onClick={() => setShowAboutPopup((prevState) => !prevState)}
             ref={aboutRanksRef}
           />
         </div>
@@ -152,51 +129,42 @@ function App() {
                   <td className="speaker-column">{user['Пользователь']}</td>
                   <td>
                     <button
-                      onClick={(event) => togglePopup(user, event)}
+                      onClick={() => handleBookButtonClick(user)}
                       style={{ background: 'none', border: 'none', padding: '0' }}
                     >
                       <img src={images.bookbutton} alt="Book of user" width="30" />
                     </button>
                   </td>
                 </tr>
-                {expandedUsers.includes(user) && (
+                {expandedUser === user && (
                   <tr>
-                    <td colSpan="3">
-                      <ul className="book-list">
-                        {user['Книги_Авторы'].map((bookAuthor, index) => (
-                          <li key={index}>
-                            <span className="book-title">Author: {bookAuthor.Автор}</span>
-                            <span className="book-author">Book: {bookAuthor.Книга}</span>
-                            <span className="book-image">Image: {bookAuthor.Изображение}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
+                  <td colSpan="3">
+                    <ul className="book-list">
+                      {user['Книги_Авторы'].map((bookAuthor, index) => (
+                        <li key={index} className={`book-info ${expandedUser === user ? 'expanded' : ''}`}>
+                          <div className="book-info-item">
+                            <div className="book-details">
+                              <span className="book-title">Book: {bookAuthor.Книга}</span>
+                              <span className="book-author">Author: {bookAuthor.Автор}</span>
+                            </div>
+                            <div className="book-image-container">
+                              <img
+                                src={bookAuthor.Изображение}
+                                alt={`Image: ${bookAuthor.Книга}`}
+                                onClick={() => handleImageClick(bookAuthor.Изображение)}
+                              />
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
                 )}
               </React.Fragment>
             ))}
           </tbody>
         </table>
-
-        {showPopup && popupUser && (
-          <div className="popup-container" style={{ top: cursorY + popupOffsetY, left: cursorX + popupOffsetX }}>
-            <div ref={popupRef} className="popup" style={{ maxWidth: '300px' }}>
-              <div className="popup-content">
-                <p className="popup-user">{popupUser['Пользователь']}</p>
-                <ul className="book-list" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                  {popupUser['Книги_Авторы'].map((bookAuthor, index) => (
-                    <li key={index}>
-                      <span className="book-title">Author: {bookAuthor.Автор}</span>
-                      <span className="book-author">Book: {bookAuthor.Книга}</span>
-                      <span className="book-image">Image: {bookAuthor.Изображение}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
 
         {showAboutPopup && (
           <div className="about-popup-container">
@@ -209,10 +177,20 @@ function App() {
             </div>
           </div>
         )}
+
+        {selectedImage && (
+          <div className="image-modal" onClick={() => setSelectedImage(null)}>
+            <div className="image-modal-content">
+              <img src={selectedImage} alt="Selected Image" />
+            </div>
+          </div>
+        )}
       </header>
+      <Footer />
     </div>
   );
 }
 
 export default App;
+
 

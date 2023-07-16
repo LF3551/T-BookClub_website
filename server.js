@@ -6,7 +6,7 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 const app = express();
 // Разрешение запросов CORS
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3002'); // Укажите URL вашего клиентского приложения
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3005'); // Укажите URL вашего клиентского приложения
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
@@ -18,8 +18,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/hall-of-fame', async (req, res) => {
   try {
     const { google } = require('googleapis');
-    // const keys = JSON.parse(process.env.KEYS_JSON);
-    const keys = require('./keys.json'); 
+    const keys = require('./keys.json');
 
     // Аутентификация с использованием ключей доступа
     const client = new google.auth.JWT(
