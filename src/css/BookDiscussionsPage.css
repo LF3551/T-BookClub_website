@@ -1,0 +1,89 @@
+/* BookDiscussionsPage.css */
+
+/* Add this CSS to center images in rows of three */
+.center-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Grid layout for the book images */
+  .book-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Initially, show 3 books in a row */
+    grid-gap: 15px;
+    justify-content: center; /* Add this line to center the grid */
+  }
+  
+  /* Styles for each individual book item */
+  .book-info-item {
+    flex-basis: calc(33.33% - 20px); /* 3 items in a row initially */
+    max-width: calc(33.33% - 20px); /* 3 items in a row initially */
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+  }
+  
+  /* Style for the book images */
+  .book-image {
+    width: 100%; /* Set the width to 100% to ensure images are of the same size */
+    height: 150px; /* Set a fixed height for all images initially */
+    object-fit: cover; /* Scale the image to cover the container while maintaining aspect ratio */
+    cursor: pointer; /* Show pointer cursor when hovering over images */
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .book-info-item {
+      flex-basis: calc(33.33% - 20px); /* 3 items in a row on smaller screens */
+      max-width: calc(33.33% - 20px); /* 3 items in a row on smaller screens */
+    }
+  
+    .book-image {
+      height: 120px; /* Reduce the image height on smaller screens */
+    }
+  }
+  
+  /* Media query for larger screens (e.g., desktops) */
+  @media (min-width: 600px) {
+    .book-info-grid {
+      grid-template-columns: repeat(5, 1fr); /* Show 5 books in a row on larger screens */
+    }
+  
+    .book-info-item {
+      flex-basis: calc(20% - 20px); /* 5 items in a row on larger screens */
+      max-width: calc(20% - 20px); /* 5 items in a row on larger screens */
+    }
+  
+    .book-image {
+      height: 180px; /* Increase the image height on larger screens */
+    }
+  }
+  
+  /* Center the book images in the grid cell */
+  .book-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Set the height to 100% to vertically align the image */
+  }
+  
+  /* Style for the back button */
+  .back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px; /* Smooth transition for the background color */
+    display: block; /* Display as a block element to center it */
+    margin: 20px auto 5mm; /* Margin auto to center horizontally, 20px top, 5mm bottom */
+    width: fit-content; /* Set the width to fit the content */
+  }
+  
+  /* Style for the back button when hovered */
+  .back-button:hover {
+    background-color: #999; /* Darker gray color on hover */
+  }
+  

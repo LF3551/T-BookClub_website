@@ -8,6 +8,7 @@ import Footer from './imported_js/Footer';
 import BookList from './imported_js/BookList';
 import { Link } from 'react-router-dom';
 
+
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
   rankImages[i] = images[`rank${i}`];
