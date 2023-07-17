@@ -133,6 +133,7 @@ function App() {
                       alt={`Rank ${user['Появления']}`}
                       className="rank-icon"
                       width="50"
+                      draggable="false"
                     />
                   </td>
                   <td className="speaker-column">{user['Пользователь']}</td>

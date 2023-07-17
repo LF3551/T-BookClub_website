@@ -90,7 +90,7 @@ body {
 .about-ranks-image {
   position: fixed;
   top: 100px;
-  left: 10px;
+  right: 10px;
   width: 40px;
   height: auto;
   cursor: pointer;
@@ -170,6 +170,7 @@ body {
 
 .rank-icon {
   transition: transform 0.3s ease;
+  
 }
 
 .rank-icon:hover {
