@@ -1,3 +1,4 @@
+/* Общие стили */
 body {
   margin: 0;
   padding: 0;
@@ -18,7 +19,6 @@ body {
   font-size: calc(10px + 2vmin);
   color: white;
   border-bottom: none;
-
 }
 
 .App-logo {
@@ -35,17 +35,6 @@ body {
   list-style-type: none;
   font-size: 12px;
   padding-left: 36px;
-}
-
-.book-title {
-  display: block;
-  font-size: 20px;
-}
-
-.book-author,
-.book-image {
-  display: block;
-  font-size: 12px;
 }
 
 .popup-container {
@@ -87,11 +76,13 @@ body {
 .App {
   position: relative;
 }
+
 .about-ranks-container {
   position: absolute;
   top: 0;
   left: calc(50% - 2cm);
 }
+
 .about-ranks-image {
   position: fixed;
   top: 100px;
@@ -175,7 +166,6 @@ body {
 
 .rank-icon {
   transition: transform 0.3s ease;
-  
 }
 
 .rank-icon:hover {
@@ -212,6 +202,7 @@ table {
 .speaker-image {
   font-size: 12px;
 }
+
 .book-image-thumbnail {
   max-width: 10px; /* Укажите желаемый максимальный размер миниатюры */
   max-height: 10px;
@@ -222,6 +213,7 @@ table {
   width: 50px; /* Укажите желаемую ширину изображения */
   height: auto; /* Высота будет автоматически рассчитываться с сохранением пропорций */
 }
+
 .image-modal {
   position: fixed;
   top: 0;
@@ -245,6 +237,7 @@ table {
   height: 100%;
   object-fit: contain;
 }
+
 .book-info {
   display: grid;
   grid-template-columns: auto;
@@ -260,7 +253,6 @@ table {
   gap: 10px; /* Расстояние между столбцами */
 }
 
-
 .book-title {
   display: block;
   font-size: 16px;
@@ -272,8 +264,8 @@ table {
   flex-grow: 1;
   margin-right: 10px;
   border-right: 1px solid rgb(0, 0, 0); /* Белая граница справа */
-  
-} 
+}
+
 .book-info {
   max-height: 0;
   opacity: 0;
@@ -287,11 +279,6 @@ table {
   opacity: 1;
   transition: max-height 0.6s ease-in, opacity 0.6s ease-in;
 }
-
-
-
-
-
 
 .footer {
   background-color: transparent;
@@ -370,7 +357,7 @@ table {
   align-items: center;
   padding: 0 1cm;
   font-size: 2.4rem; /* Измените размер шрифта по вашему усмотрению */
-  transition: font-size 0.3s ease; 
+  transition: font-size 0.3s ease;
 }
 
 @media (max-width: 600px) {
@@ -378,10 +365,15 @@ table {
     font-size: 1.2rem; /* Измените размер шрифта по вашему усмотрению */
   }
 }
-th, td {
+
+/* Добавленные стили для выравнивания колонок */
+th,
+td {
   flex-shrink: 0;
 }
-.book-details::before, .book-author::before {
+
+.book-details::before,
+.book-author::before {
   content: "";
   position: absolute;
   left: 0;
