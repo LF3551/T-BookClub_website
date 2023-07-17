@@ -69,15 +69,18 @@ function App() {
   };
 
   const sortedData = hallOfFameData.sort((a, b) => b['Появления'] - a['Появления']);
-  
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={images.t_logo} className="App-logo" alt="logo" draggable="false"/>
-        
+        <img src={images.t_logo} className="App-logo" alt="logo" draggable="false" />
+
         <h1 className="welcome-text">
-            <span className="club-name">Welcome to the T-Book Club</span>
-          </h1>
+          <span className="club-name">Welcome to the T-Book Club</span>
+        </h1>
+        <Link to="/book-discussions" className="previous-discussions-button">
+          Discussed books
+        </Link>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
           <img
@@ -117,15 +120,39 @@ function App() {
                   </td>
                   <td className="speaker-column">{user['Пользователь']}</td>
                   <td>
-                  <button
-                onClick={() => handleBookButtonClick(user)}
-                className={`book-button ${expandedUser === user ? 'expanded' : ''}`}
-              >
-                <img src={images.bookbutton} alt="Book of user" width="30" draggable="false"/>
-              </button>
+                    <button
+                      onClick={() => handleBookButtonClick(user)}
+                      className={`book-button ${expandedUser === user ? 'expanded' : ''}`}
+                    >
+                      <img src={images.bookbutton} alt="Book of user" width="30" draggable="false" />
+                    </button>
                   </td>
                 </tr>
-                {expandedUser === user && <BookList user={user} expandedUser={expandedUser} handleImageClick={handleImageClick} />}
+                {expandedUser === user && (
+                  <tr>
+                    <td colSpan="3">
+                      <ul className="book-list">
+                        {user['Книги_Авторы'].map((bookAuthor, index) => (
+                          <li key={index} className={`book-info ${expandedUser === user ? 'expanded' : ''}`}>
+                            <div className="book-info-item">
+                              <div className="book-details">
+                                <span className="book-title">Book: {bookAuthor.Книга}</span>
+                                <span className="book-author">Author: {bookAuthor.Автор}</span>
+                              </div>
+                              <div className="book-image-container">
+                                <img
+                                  src={bookAuthor.Изображение}
+                                  alt={`Image: ${bookAuthor.Книга}`}
+                                  onClick={() => handleImageClick(bookAuthor.Изображение)}
+                                />
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                )}
               </React.Fragment>
             ))}
           </tbody>
@@ -157,5 +184,3 @@ function App() {
 }
 
 export default App;
-
-
