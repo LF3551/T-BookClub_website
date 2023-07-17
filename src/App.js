@@ -4,7 +4,9 @@ import images from './images';
 import './css/footer.css';
 import './css/buttons.css';
 import RanksTable from './RanksTable';
-import { serverPort } from './config';
+import { Link } from 'react-router-dom';
+
+
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
