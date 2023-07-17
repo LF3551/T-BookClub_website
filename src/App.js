@@ -98,7 +98,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={images.t_logo} className="App-logo" alt="logo" draggable="false"/>
-        <h1>Welcome to the T-Book Club</h1>
+        
+        <h1 className="welcome-text">
+            <span className="club-name">Welcome to the T-Book Club</span>
+          </h1>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
           <img

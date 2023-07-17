@@ -362,3 +362,17 @@ table {
   transform: translateY(2px); /* Move the button down when active */
   filter: brightness(0.8); /* Reduce brightness when active */
 }
+
+.welcome-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1cm;
+  font-size: 2rem; /* Измените размер шрифта по вашему усмотрению */
+}
+
+@media (max-width: 600px) {
+  .welcome-text {
+    font-size: 1.2rem; /* Измените размер шрифта по вашему усмотрению */
+  }
+}
