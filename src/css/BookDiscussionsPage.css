@@ -45,7 +45,7 @@
   }
   
   /* Media query for larger screens (e.g., desktops) */
-  @media (min-width: 1200px) {
+  @media (min-width: 600px) {
     .book-discussions-grid {
       grid-template-columns: repeat(5, 1fr); /* Show 5 books in a row on larger screens */
     }
