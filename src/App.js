@@ -17,13 +17,13 @@ function Footer() {
             <p className="connect-text">Let's Connect:</p>
             <div className="buttons-container">
               <a href="https://www.linkedin.com/in/aleksei-aleinikov-78195911a/" target="_blank" rel="noopener noreferrer">
-                <img className="button-linkedin" src={images.linkedinbutton} alt="LinkedIn" />
+                <img className="button-linkedin" src={images.linkedinbutton} alt="LinkedIn" draggable="false"/>
               </a>
               <a href="https://www.instagram.com/a1eksey_gr/" target="_blank" rel="noopener noreferrer">
-                <img className="button-instagram" src={images.instagrambutton} alt="Instagram" />
+                <img className="button-instagram" src={images.instagrambutton} alt="Instagram" draggable="false"/>
               </a>
               <a href="mailto:adk3551@gmail.com">
-                <img className="button-email" src={images.emailbutton} alt="Email" />
+                <img className="button-email" src={images.emailbutton} alt="Email" draggable="false"/>
               </a>
             </div>
           </div>
@@ -97,7 +97,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={images.t_logo} className="App-logo" alt="logo" />
+        <img src={images.t_logo} className="App-logo" alt="logo" draggable="false"/>
         <h1>Welcome to the T-Book Club</h1>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
@@ -105,6 +105,7 @@ function App() {
             src={images.aboutRanksImage}
             alt="About Ranks"
             className="about-ranks-image"
+            draggable="false"
             onClick={() => setShowAboutPopup((prevState) => !prevState)}
             ref={aboutRanksRef}
           />
@@ -140,7 +141,7 @@ function App() {
                 onClick={() => handleBookButtonClick(user)}
                 className={`book-button ${expandedUser === user ? 'expanded' : ''}`}
               >
-                <img src={images.bookbutton} alt="Book of user" width="30" />
+                <img src={images.bookbutton} alt="Book of user" width="30" draggable="false"/>
               </button>
                   </td>
                 </tr>
