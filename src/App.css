@@ -86,7 +86,11 @@ body {
 .App {
   position: relative;
 }
-
+.about-ranks-container {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 2cm);
+}
 .about-ranks-image {
   position: fixed;
   top: 100px;
