@@ -3,9 +3,9 @@ import './App.css';
 import images from './images';
 import './css/footer.css';
 import './css/buttons.css';
-import RanksTable from './RanksTable';
-import Footer from './Footer';
-import BookList from './BookList';
+import RanksTable from './imported_js/RanksTable';
+import Footer from './imported_js/Footer';
+import BookList from './imported_js/BookList';
 import { Link } from 'react-router-dom';
 
 const rankImages = {};
