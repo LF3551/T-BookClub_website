@@ -4,42 +4,14 @@ import images from './images';
 import './css/footer.css';
 import './css/buttons.css';
 import RanksTable from './RanksTable';
+import Footer from './Footer';
+import BookList from './BookList';
 import { Link } from 'react-router-dom';
-
-
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
   rankImages[i] = images[`rank${i}`];
 }
-function Footer() {
-  return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-buttons">
-          <div className="connect-wrapper">
-            <p className="connect-text">Let's Connect:</p>
-            <div className="buttons-container">
-              <a href="https://www.linkedin.com/in/aleksei-aleinikov-78195911a/" target="_blank" rel="noopener noreferrer">
-                <img className="button-linkedin" src={images.linkedinbutton} alt="LinkedIn" draggable="false"/>
-              </a>
-              <a href="https://www.instagram.com/a1eksey_gr/" target="_blank" rel="noopener noreferrer">
-                <img className="button-instagram" src={images.instagrambutton} alt="Instagram" draggable="false"/>
-              </a>
-              <a href="mailto:adk3551@gmail.com">
-                <img className="button-email" src={images.emailbutton} alt="Email" draggable="false"/>
-              </a>
-            </div>
-          </div>
-        </div>
-        <p className="footer-text">
-          &copy; {new Date().getFullYear()} T-Book Club. All rights reserved.
-        </p>
-      </div>
-    </footer>
-  );
-}
-
 
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
@@ -97,7 +69,7 @@ function App() {
   };
 
   const sortedData = hallOfFameData.sort((a, b) => b['Появления'] - a['Появления']);
-
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -153,31 +125,7 @@ function App() {
               </button>
                   </td>
                 </tr>
-                {expandedUser === user && (
-                  <tr>
-                  <td colSpan="3">
-                    <ul className="book-list">
-                      {user['Книги_Авторы'].map((bookAuthor, index) => (
-                        <li key={index} className={`book-info ${expandedUser === user ? 'expanded' : ''}`}>
-                          <div className="book-info-item">
-                            <div className="book-details">
-                              <span className="book-title">Book: {bookAuthor.Книга}</span>
-                              <span className="book-author">Author: {bookAuthor.Автор}</span>
-                            </div>
-                            <div className="book-image-container">
-                              <img
-                                src={bookAuthor.Изображение}
-                                alt={`Image: ${bookAuthor.Книга}`}
-                                onClick={() => handleImageClick(bookAuthor.Изображение)}
-                              />
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
-                </tr>
-                )}
+                {expandedUser === user && <BookList user={user} expandedUser={expandedUser} handleImageClick={handleImageClick} />}
               </React.Fragment>
             ))}
           </tbody>
