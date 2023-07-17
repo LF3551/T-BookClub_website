@@ -1,14 +1,14 @@
 /* BookDiscussionsPage.css */
 
 /* Add this CSS to center images in rows of three */
-.center-images {
+.book-discussions-center-images {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
   
   /* Grid layout for the book images */
-  .book-info-grid {
+  .book-discussions-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Initially, show 3 books in a row */
     grid-gap: 15px;
@@ -16,7 +16,7 @@
   }
   
   /* Styles for each individual book item */
-  .book-info-item {
+  .book-discussions-item {
     flex-basis: calc(33.33% - 20px); /* 3 items in a row initially */
     max-width: calc(33.33% - 20px); /* 3 items in a row initially */
     display: flex;
@@ -25,7 +25,7 @@
   }
   
   /* Style for the book images */
-  .book-image {
+  .book-discussions-image {
     width: 100%; /* Set the width to 100% to ensure images are of the same size */
     height: 150px; /* Set a fixed height for all images initially */
     object-fit: cover; /* Scale the image to cover the container while maintaining aspect ratio */
@@ -34,34 +34,34 @@
   
   /* Media query for smaller screens */
   @media (max-width: 768px) {
-    .book-info-item {
+    .book-discussions-item {
       flex-basis: calc(33.33% - 20px); /* 3 items in a row on smaller screens */
       max-width: calc(33.33% - 20px); /* 3 items in a row on smaller screens */
     }
   
-    .book-image {
+    .book-discussions-image {
       height: 120px; /* Reduce the image height on smaller screens */
     }
   }
   
   /* Media query for larger screens (e.g., desktops) */
-  @media (min-width: 600px) {
-    .book-info-grid {
+  @media (min-width: 1200px) {
+    .book-discussions-grid {
       grid-template-columns: repeat(5, 1fr); /* Show 5 books in a row on larger screens */
     }
   
-    .book-info-item {
+    .book-discussions-item {
       flex-basis: calc(20% - 20px); /* 5 items in a row on larger screens */
       max-width: calc(20% - 20px); /* 5 items in a row on larger screens */
     }
   
-    .book-image {
+    .book-discussions-image {
       height: 180px; /* Increase the image height on larger screens */
     }
   }
   
   /* Center the book images in the grid cell */
-  .book-image-container {
+  .book-discussions-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,7 +69,7 @@
   }
   
   /* Style for the back button */
-  .back-button {
+  .book-discussions-back-button {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
@@ -83,7 +83,7 @@
   }
   
   /* Style for the back button when hovered */
-  .back-button:hover {
+  .book-discussions-back-button:hover {
     background-color: #999; /* Darker gray color on hover */
   }
   

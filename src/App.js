@@ -7,7 +7,7 @@ import RanksTable from './imported_js/RanksTable';
 import Footer from './imported_js/Footer';
 import BookList from './imported_js/BookList';
 import { Link } from 'react-router-dom';
-
+import BookDiscussionsPage from './BookDiscussionsPage';
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {

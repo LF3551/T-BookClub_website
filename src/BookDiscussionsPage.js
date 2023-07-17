@@ -3,6 +3,9 @@ import images from './images';
 import { Link } from 'react-router-dom';
 import './css/BookDiscussionsPage.css';
 
+// Заглушка для недоступного изображения
+const placeholderImage = 'URL_К_ЗАГЛУШКЕ'; // Замените на URL изображения заглушки
+
 function BookDiscussionsPage() {
   const [books, setBooks] = useState([]);
 
@@ -25,34 +28,35 @@ function BookDiscussionsPage() {
   };
 
   return (
-    <div className="BookDiscussionsPage">
-      <header className="App-header">
+    <div className="book-discussions-page">
+      <header className="app-header">
         <h1 className="welcome-text">
           <span className="club-name">Books we already discussed!</span>
         </h1>
       </header>
       <div className="discussion-content">
-        <div className="book-list center-images">
-          <div className="book-info-grid">
-            {books.map((user, index) => (
-              <div key={index} className="book-info-item">
-                <div className="book-image-container">
-                  <img
-                    src={user['Книги_Авторы'][0].Изображение}
-                    alt={`Image: ${user['Книги_Авторы'][0].Книга}`}
-                    onClick={() => handleImageClick(user['Книги_Авторы'][0].Изображение)}
-                    className="book-image" // Add the 'book-image' class for image styling
-                  />
+        <div className="book-list book-discussions-center-images">
+          <div className="book-info-grid book-discussions-grid">
+            {books.map((user, userIndex) => (
+              user['Книги_Авторы'].map((book, bookIndex) => (
+                <div key={`${userIndex}-${bookIndex}`} className="book-info-item book-discussions-item">
+                  <div className="book-image-container book-discussions-image-container">
+                    <img
+                      src={book.Изображение || placeholderImage}
+                      alt={`Image: ${book.Книга}`}
+                      onClick={() => handleImageClick(book.Изображение)}
+                      className="book-image book-discussions-image" // Add the 'book-image' class for image styling
+                    />
+                  </div>
                 </div>
-              </div>
+              ))
             ))}
           </div>
         </div>
       </div>
-      <Link to="/" className="back-button">Back</Link>
+      <Link to="/" className="book-discussions-back-button">Back</Link>
     </div>
   );
 }
 
 export default BookDiscussionsPage;
-
