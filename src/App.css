@@ -153,24 +153,7 @@ body {
   font-weight: bold;
 }
 
-.book-button {
-  background: none;
-  border: none;
-  padding: 0;
-  transition: transform 0.2s, filter 0.2s;
-}
 
-.book-button.animated {
-  transform: scale(0.9);
-}
-
-.rank-icon {
-  transition: transform 0.3s ease;
-}
-
-.rank-icon:hover {
-  transform: rotate(-15deg);
-}
 
 .column-header {
   display: flex;
@@ -280,77 +263,6 @@ table {
   transition: max-height 0.6s ease-in, opacity 0.6s ease-in;
 }
 
-.footer {
-  background-color: transparent;
-  color: #ffffff;
-  padding: 20px 0;
-  text-align: center;
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.footer-logo {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.footer-links {
-  margin-bottom: 20px;
-}
-
-.footer-links a {
-  color: #ffffff;
-  text-decoration: none;
-  margin-right: 10px;
-}
-
-.footer-buttons {
-  margin-bottom: 20px;
-}
-
-.footer-buttons img {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.footer-text {
-  font-size: 12px;
-}
-
-.button-linkedin:hover,
-.button-linkedin:active {
-  filter: brightness(0.8); /* Reduce brightness on hover and click */
-}
-
-.button-instagram:hover,
-.button-instagram:active {
-  filter: brightness(0.8); /* Reduce brightness on hover and click */
-}
-
-.button-email:hover,
-.button-email:active {
-  filter: brightness(0.8); /* Reduce brightness on hover and click */
-}
-
-.button-linkedin:active,
-.button-instagram:active,
-.button-email:active {
-  transform: translateY(2px); /* Move the button down when active */
-  filter: brightness(0.8); /* Reduce brightness when active */
-}
-
-.book-button:active {
-  transform: translateY(2px); /* Move the button down when active */
-  filter: brightness(0.8); /* Reduce brightness when active */
-}
-
 .welcome-text {
   display: flex;
   justify-content: center;
@@ -364,19 +276,4 @@ table {
   .welcome-text {
     font-size: 1.2rem; /* Измените размер шрифта по вашему усмотрению */
   }
-}
-
-/* Добавленные стили для выравнивания колонок */
-th,
-td {
-  flex-shrink: 0;
-}
-
-.book-details::before,
-.book-author::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 10px; /* Измените значение ширины отступа по вашему усмотрению */
-  height: 100%;
 }

@@ -1,0 +1,66 @@
+.footer {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links {
+    margin-bottom: 20px;
+  }
+  
+  .footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  .footer-buttons {
+    margin-bottom: 20px;
+  }
+  
+  .footer-buttons img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .footer-text {
+    font-size: 12px;
+  }
+  
+  .button-linkedin:hover,
+  .button-linkedin:active {
+    filter: brightness(0.8); /* Уменьшить яркость при наведении и нажатии */
+  }
+  
+  .button-instagram:hover,
+  .button-instagram:active {
+    filter: brightness(0.8); /* Уменьшить яркость при наведении и нажатии */
+  }
+  
+  .button-email:hover,
+  .button-email:active {
+    filter: brightness(0.8); /* Уменьшить яркость при наведении и нажатии */
+  }
+  
+  .button-linkedin:active,
+  .button-instagram:active,
+  .button-email:active {
+    transform: translateY(2px); /* Переместить кнопку вниз при нажатии */
+    filter: brightness(0.8); /* Уменьшить яркость при нажатии */
+  }
+  

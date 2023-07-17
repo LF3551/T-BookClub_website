@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 import images from './images';
+import './css/footer.css';
+import './css/buttons.css';
 import RanksTable from './RanksTable';
 import { serverPort } from './config';
 
