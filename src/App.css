@@ -34,6 +34,7 @@ body {
 .book-list li {
   list-style-type: none;
   font-size: 12px;
+  padding-left: 36px;
 }
 
 .book-title {
@@ -369,10 +370,21 @@ table {
   align-items: center;
   padding: 0 1cm;
   font-size: 2.4rem; /* Измените размер шрифта по вашему усмотрению */
+  transition: font-size 0.3s ease; 
 }
 
 @media (max-width: 600px) {
   .welcome-text {
     font-size: 1.2rem; /* Измените размер шрифта по вашему усмотрению */
   }
+}
+th, td {
+  flex-shrink: 0;
+}
+.book-details::before, .book-author::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 10px; /* Измените значение ширины отступа по вашему усмотрению */
+  height: 100%;
 }
