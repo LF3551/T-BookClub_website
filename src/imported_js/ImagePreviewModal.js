@@ -1,11 +1,10 @@
+// ImagePreviewModal.js
 import React from 'react';
 
-const ImagePreviewModal = ({ image, onClose }) => {
+const ImagePreviewModal = ({ imageUrl, onClose }) => {
   return (
-    <div className="image-modal">
-      <div className="image-modal-content">
-        <img src={image} alt="Preview" />
-      </div>
+    <div className="image-modal" onClick={onClose}>
+      <img src={imageUrl} alt="Image Preview" />
     </div>
   );
 };

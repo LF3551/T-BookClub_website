@@ -9,8 +9,7 @@ const placeholderImage = 'URL_К_ЗАГЛУШКЕ'; // Замените на URL
 function BookDiscussionsPage() {
   const [books, setBooks] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isPreviewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
     fetchBooks();
@@ -27,17 +26,12 @@ function BookDiscussionsPage() {
   };
 
   const handleImageClick = (image) => {
-    // Handle the image click here (if needed)
-  };
-
-  const handleImageMouseOver = (event, image) => {
-    setPreviewVisible(true);
-    setCursorPosition({ x: event.clientX, y: event.clientY });
     setPreviewImage(image);
+    setPreviewOpen(true);
   };
 
-  const handleImageMouseOut = () => {
-    setPreviewVisible(false);
+  const handlePreviewClose = () => {
+    setPreviewOpen(false);
   };
 
   return (
@@ -55,8 +49,6 @@ function BookDiscussionsPage() {
                 <div
                   key={`${userIndex}-${bookIndex}`}
                   className="book-info-item book-discussions-item"
-                  onMouseOver={(e) => handleImageMouseOver(e, book.Изображение)}
-                  onMouseOut={handleImageMouseOut}
                 >
                   <div className="book-image-container book-discussions-image-container">
                     <img
@@ -65,14 +57,6 @@ function BookDiscussionsPage() {
                       onClick={() => handleImageClick(book.Изображение)}
                       className="book-image book-discussions-image"
                     />
-                    {previewVisible && previewImage === book.Изображение && (
-                      <div
-                        className="image-modal"
-                        style={{ top: cursorPosition.y, left: cursorPosition.x }}
-                      >
-                        <img src={book.Изображение || placeholderImage} alt={`Image: ${book.Книга}`} />
-                      </div>
-                    )}
                   </div>
                 </div>
               ))
@@ -81,6 +65,13 @@ function BookDiscussionsPage() {
         </div>
       </div>
       <Link to="/" className="book-discussions-back-button">Back</Link>
+
+      {isPreviewOpen && (
+        <ImagePreviewModal
+          imageUrl={previewImage}
+          onClose={handlePreviewClose}
+        />
+      )}
     </div>
   );
 }
