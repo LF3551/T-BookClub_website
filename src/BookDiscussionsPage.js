@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import images from './images';
 import { Link } from 'react-router-dom';
 import './css/BookDiscussionsPage.css';
 
