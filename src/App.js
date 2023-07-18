@@ -6,7 +6,6 @@ import './css/buttons.css';
 import RanksTable from './imported_js/RanksTable';
 import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
-import envJson from './env.json'; // Импортируем env.json
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
@@ -15,8 +14,6 @@ for (let i = 1; i <= 10; i++) {
 
 function App() {
   const [hallOfFameData, setHallOfFameData] = useState([]);
-  const apiUrl = envJson.REACT_APP_API_URL || process.env.REACT_APP_API_URL; // Используем значение из env.json, если доступно
-
   const [expandedUser, setExpandedUser] = useState(null);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -47,10 +44,10 @@ function App() {
       document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [aboutRanksRef]);
-
+  
   const fetchHallOfFameData = async () => {
     try {
-      const response = await fetch(apiUrl);
+      const response = await fetch("https://t-book-club-server-lf3551.vercel.app/hall-of-fame");
       const data = await response.json();
       setHallOfFameData(data);
     } catch (error) {
