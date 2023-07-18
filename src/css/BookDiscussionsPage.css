@@ -137,6 +137,7 @@
     display: block; /* Remove any default spacing below the image */
     margin: auto; /* Center the image horizontally */
     border-radius: 5px; /* Rounded corners for the image */
+    user-select: none;
   }
   
   
