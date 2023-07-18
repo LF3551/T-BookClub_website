@@ -17,8 +17,8 @@
   
   /* Styles for each individual book item */
   .book-discussions-item {
-    flex-basis: calc(33.33% - 20px); /* 3 items in a row initially */
-    max-width: calc(33.33% - 20px); /* 3 items in a row initially */
+    flex-basis: calc(100% - 20px); /* 3 items in a row initially */
+    max-width: calc(100% - 20px);/* 3 items in a row initially */
     display: flex;
     justify-content: center; /* Center the content horizontally */
     align-items: center; /* Center the content vertically */
@@ -35,8 +35,8 @@
   /* Media query for smaller screens */
   @media (max-width: 768px) {
     .book-discussions-item {
-      flex-basis: calc(33.33% - 20px); /* 3 items in a row on smaller screens */
-      max-width: calc(33.33% - 20px); /* 3 items in a row on smaller screens */
+        flex-basis: calc(100% - 20px); /* 3 items in a row on smaller screens */
+        max-width: calc(100% - 20px); /* 3 items in a row on smaller screens */
     }
   
     .book-discussions-image {
@@ -51,8 +51,8 @@
     }
   
     .book-discussions-item {
-      flex-basis: calc(20% - 20px); /* 5 items in a row on larger screens */
-      max-width: calc(20% - 20px); /* 5 items in a row on larger screens */
+      flex-basis: calc(100% - 20px); /* 5 items in a row on larger screens */
+      max-width: calc(100% - 20px); /* 5 items in a row on larger screens */
     }
   
     .book-discussions-image {
@@ -85,5 +85,77 @@
   /* Style for the back button when hovered */
   .book-discussions-back-button:hover {
     background-color: #999; /* Darker gray color on hover */
+  }
+  /* Обновленный BookDiscussionsPage.css */
+
+
+
+  
+/* ... */
+
+/* Style for the book images */
+.book-discussions-grid .book-discussions-item .book-discussions-image {
+    width: 100%; /* Set the width to 100% to ensure images fill the container */
+    height: auto; /* Let the height adjust automatically to maintain aspect ratio */
+    object-fit: cover; /* Scale the image to cover the container while maintaining aspect ratio */
+    cursor: pointer; /* Show pointer cursor when hovering over images */
+    -webkit-user-drag: none; /* Disable image dragging for Safari and Chrome */
+    user-select: none; /* Disable image selection */
+    position: relative; 
+    
+    
+  }
+
+/* Style for the image preview modal */
+.book-discussions-grid .book-discussions-item .image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999; /* Increase the z-index value to make sure it's above other elements */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    border-radius: 5px;
+    /* Уменьшаем ширину и высоту модального окна */
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    /* Центрируем модальное окно при помощи transform */
+    transform: translate(-50%, -50%);
+  }
+  
+/* Style the image inside the preview modal */
+.book-discussions-grid .book-discussions-item .image-modal img {
+    /* Задаем максимальную ширину и высоту для картинки, чтобы она сохранила пропорции */
+    max-width: 100%;
+    max-height: 100%;
+    /* Добавляем дополнительные стили, чтобы изображение заполняло всё пространство модального окна */
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Заполняем максимально возможную площадь окна, сохраняя пропорции */
+    display: block; /* Remove any default spacing below the image */
+    margin: auto; /* Center the image horizontally */
+    border-radius: 5px; /* Rounded corners for the image */
+  }
+  
+  
+  /* Display the image preview modal on hover */
+.book-discussions-grid .book-discussions-item:hover .image-modal {
+    display: block;
+  }
+
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .book-discussions-grid .book-discussions-item .book-discussions-image {
+      height: 180px; /* Reduce the image height on smaller screens */
+    }
+  }
+  
+  /* Media query for larger screens (e.g., desktops) */
+  @media (min-width: 600px) {
+    .book-discussions-grid .book-discussions-item .book-discussions-image {
+      height: 250px; /* Increase the image height on larger screens */
+    }
   }
   
