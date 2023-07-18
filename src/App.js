@@ -3,7 +3,9 @@ import './App.css';
 import images from './images';
 import './css/footer.css';
 import './css/buttons.css';
+import './css/login.css';
 import RanksTable from './imported_js/RanksTable';
+import LoginModal from './imported_js/LoginModal';
 import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
 
@@ -13,11 +15,32 @@ for (let i = 1; i <= 10; i++) {
 }
 
 function App() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [hallOfFameData, setHallOfFameData] = useState([]);
   const [expandedUser, setExpandedUser] = useState(null);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const aboutRanksRef = useRef(null);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  // Реф для модального окна для обработки кликов вне модального окна (закрытие при клике вне окна).
+  const modalRef = useRef(null);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setShowLoginModal(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
 
   useEffect(() => {
     fetchHallOfFameData();
@@ -44,7 +67,7 @@ function App() {
       document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [aboutRanksRef]);
-  
+
   const fetchHallOfFameData = async () => {
     try {
       const response = await fetch("https://t-book-club-server-lf3551.vercel.app/hall-of-fame");
@@ -74,7 +97,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={images.t_logo} className="App-logo" alt="logo" draggable="false" />
+<button onClick={() => setShowLoginModal(true)}>Login</button>
 
+      {/* Модальное окно для логина */}
+      
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
         <h1 className="welcome-text">
           <span className="club-name">Welcome to the T-Book Club</span>
         </h1>
