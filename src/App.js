@@ -33,6 +33,7 @@ function App() {
       }
     };
 
+    
     const handleEscapeKey = (event) => {
       if (event.key === 'Escape') {
         setShowAboutPopup(false);
