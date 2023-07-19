@@ -170,3 +170,10 @@
     color: black; /* Изменяем цвет текста на черный */
     font-size: 16px; /* Устанавливаем размер шрифта на 20 пикселей, чтобы совпадал с другой ссылкой */
   }
+
+/* Add this CSS to your login.css file */
+.login-modal .login-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }

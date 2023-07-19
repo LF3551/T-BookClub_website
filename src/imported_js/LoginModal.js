@@ -11,12 +11,22 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [registrationPassword, setRegistrationPassword] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // Local state variable for email input
+  const [localEmail, setLocalEmail] = useState('');
+  // State variable for login error
+  const [loginError, setLoginError] = useState(false);
 
   const handleLogin = () => {
-    // Handle login logic...
-    console.log('Logged in with email:', email);
-    console.log('Logged in with password:', password);
-    onClose(); // Close the modal after successful login.
+    // Validation for email and password fields
+    if (!localEmail.trim() || !password.trim()) {
+      setLoginError(true);
+    } else {
+      setLoginError(false);
+      // Handle login logic here...
+      console.log('Logged in with email:', localEmail);
+      console.log('Logged in with password:', password);
+      onClose(); // Close the modal after successful login.
+    }
   };
 
   const handleRegistration = () => {
@@ -29,6 +39,7 @@ const LoginModal = ({ isOpen, onClose }) => {
 
   // Function to reset the input fields to their initial state
   const resetInputFields = () => {
+    setLocalEmail('');
     setUsername('');
     setPassword('');
     setRegistrationUsername('');
@@ -55,6 +66,10 @@ const LoginModal = ({ isOpen, onClose }) => {
       resetInputFields();
     }
   }, [isOpen]);
+  // Update localEmail state whenever the email state changes
+  useEffect(() => {
+    setLocalEmail(email);
+  }, [email]);
 
   return (
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
@@ -76,8 +91,8 @@ const LoginModal = ({ isOpen, onClose }) => {
                 Email:
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={localEmail}
+                  onChange={(e) => setLocalEmail(e.target.value)}
                   placeholder="Enter your email"
                 />
               </label>
@@ -97,8 +112,8 @@ const LoginModal = ({ isOpen, onClose }) => {
                 Email:
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={localEmail}
+                  onChange={(e) => setLocalEmail(e.target.value)}
                   placeholder="Enter your email"
                 />
               </label>
@@ -113,6 +128,7 @@ const LoginModal = ({ isOpen, onClose }) => {
               </label>
             </>
           )}
+          {loginError && <p className="login-error">Please enter your email and password.</p>}
           <div className="buttons-container">
             {isRegistrationModalOpen ? (
               <>
