@@ -56,7 +56,7 @@ const LoginModal = ({ isOpen, onClose }) => {
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
       <div className="join-modal">
         <div className="modal-content">
-          <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Sign in'}</h2>
+          <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
           <label>
             Name:
             <input
@@ -100,7 +100,6 @@ const LoginModal = ({ isOpen, onClose }) => {
             {isRegistrationModalOpen ? (
               <>
                 <button onClick={handleRegistration}>Join</button>
-                <button onClick={() => setRegistrationModalOpen(false)}>Close</button>
               </>
             ) : (
               <>
