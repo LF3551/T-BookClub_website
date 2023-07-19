@@ -1,6 +1,6 @@
 // LoginModal.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/login.css';
 
 const LoginModal = ({ isOpen, onClose }) => {
@@ -22,6 +22,35 @@ const LoginModal = ({ isOpen, onClose }) => {
     console.log('Registered with username:', registrationUsername);
     setRegistrationModalOpen(false); // Close the registration modal after successful registration.
   };
+
+  // Function to reset the input fields to their initial state
+  const resetInputFields = () => {
+    setUsername('');
+    setPassword('');
+    setRegistrationUsername('');
+    setRegistrationEmail('');
+    setRegistrationPassword('');
+  };
+
+  // Event listener for beforeunload to reset input fields on modal close or page refresh
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      resetInputFields();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  // Event listener for closing the modal to reset input fields
+  useEffect(() => {
+    if (!isOpen) {
+      resetInputFields();
+    }
+  }, [isOpen]);
 
   return (
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
@@ -82,13 +111,12 @@ const LoginModal = ({ isOpen, onClose }) => {
           </div>
           <p>
             {isRegistrationModalOpen ? (
-    <>
-    <span className="already-member-text">Already on T-Book Club? </span>
-    <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}>
-      Sign in
-    </span>
-  </>
-
+              <>
+                <span className="already-member-text">Already on T-Book Club? </span>
+                <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}>
+                  Sign in
+                </span>
+              </>
             ) : (
               <>
                 <span className="not-member-link">Not a member of T-Book Club? </span>
