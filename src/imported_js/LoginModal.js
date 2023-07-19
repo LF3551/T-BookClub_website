@@ -25,65 +25,80 @@ const LoginModal = ({ isOpen, onClose }) => {
 
   return (
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
-      <div className="modal-content">
-        <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={isRegistrationModalOpen ? registrationUsername : username}
-            onChange={(e) =>
-              isRegistrationModalOpen
-                ? setRegistrationUsername(e.target.value)
-                : setUsername(e.target.value)
-            }
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={isRegistrationModalOpen ? registrationPassword : password}
-            onChange={(e) =>
-              isRegistrationModalOpen
-                ? setRegistrationPassword(e.target.value)
-                : setPassword(e.target.value)
-            }
-          />
-        </label>
-        {isRegistrationModalOpen && (
-          <>
-            <label>
-              Email:
-              <input
-                type="email"
-                value={registrationEmail}
-                onChange={(e) => setRegistrationEmail(e.target.value)}
-              />
-            </label>
-          </>
-        )}
-        <div className="buttons-container">
-          {isRegistrationModalOpen ? (
+      <div className="join-modal">
+        <div className="modal-content">
+          <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Sign in'}</h2>
+          <label>
+            Name:
+            <input
+              type="text"
+              value={isRegistrationModalOpen ? registrationUsername : username}
+              onChange={(e) =>
+                isRegistrationModalOpen
+                  ? setRegistrationUsername(e.target.value)
+                  : setUsername(e.target.value)
+              }
+              placeholder="Enter your name"
+            />
+          </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              value={isRegistrationModalOpen ? registrationPassword : password}
+              onChange={(e) =>
+                isRegistrationModalOpen
+                  ? setRegistrationPassword(e.target.value)
+                  : setPassword(e.target.value)
+              }
+              placeholder="Enter your password"
+            />
+          </label>
+          {isRegistrationModalOpen && (
             <>
-              <button onClick={handleRegistration}>Join</button>
-              <button onClick={() => setRegistrationModalOpen(false)}>Close</button>
-            </>
-          ) : (
-            <>
-              <button onClick={handleLogin}>Login</button>
-              <button onClick={onClose}>Close</button>
+              <label>
+                Email:
+                <input
+                  type="email"
+                  value={registrationEmail}
+                  onChange={(e) => setRegistrationEmail(e.target.value)}
+                  placeholder="Enter your email"
+                />
+              </label>
             </>
           )}
+          <div className="buttons-container">
+            {isRegistrationModalOpen ? (
+              <>
+                <button onClick={handleRegistration}>Join</button>
+                <button onClick={() => setRegistrationModalOpen(false)}>Close</button>
+              </>
+            ) : (
+              <>
+                <button onClick={handleLogin}>Login</button>
+                <button onClick={onClose}>Close</button>
+              </>
+            )}
+          </div>
+          <p>
+            {isRegistrationModalOpen ? (
+    <>
+    <span className="already-member-text">Already on T-Book Club? </span>
+    <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}>
+      Sign in
+    </span>
+  </>
+
+            ) : (
+              <>
+                <span className="not-member-link">Not a member of T-Book Club? </span>
+                <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}>
+                  Join now!
+                </span>
+              </>
+            )}
+          </p>
         </div>
-        <p>
-          {!isRegistrationModalOpen && (
-            <span className="not-member-link">Not a member of T-Book Club?</span>
-          )}{" "}
-          <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}>
-            Join now!
-          </span>
-        </p>
       </div>
     </div>
   );

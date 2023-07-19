@@ -18,38 +18,55 @@
   .modal-content {
     background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 15px;
   }
   
   .modal-content h2 {
     margin-bottom: 10px;
     color: black; /* Изменение цвета текста на magenta */
+    
   }
   
   .modal-content label {
     display: block;
     margin-bottom: 10px;
     color: black; /* Изменение цвета текста на magenta */
+    font-size: 18px; 
+    text-align: left
+    
+    
+    
+    
   }
   
   .modal-content input {
     width: 100%;
     padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px; 
+    
   }
 
   
   
   .modal-content button {
-    margin-top: 10px;
-    margin-bottom: 1cm; /* Добавление расстояния между кнопками в 1 см */
+    margin: 0 auto;
     padding: 8px 16px;
     background-color: #333;
     color: #fff;
     border: none;
+    border: 1px solid #ccc;
     border-radius: 15px;
     cursor: pointer;
+    animation-duration: 0.2s;
+    transition: transform 0.2s;
+    
+  }
+  .modal-content button:hover,
+  .modal-content button:active {
+    transform: scale(0.95);
   }
   
 
@@ -107,15 +124,20 @@
   
   
   /* Стили для ссылки "Join now!" */
-  .login-modal .join-now-link {
+  .login-modal .join-now-link,
+  .login-modal .already-member-link {
     color: blue; /* Изменяем цвет ссылки */
     text-decoration: underline;
     cursor: pointer;
+    font-size: 20px;
   }
-
+  .join-now-link {
+    font-size: 10px;
+  }
 
   .login-modal .join-now-link:hover {
     color: darkblue; /* Изменяем цвет ссылки при наведении */
+    
   }
   /* Стили для ссылки "Not a member of T-Book Club" */
 .login-modal .not-member-link {
@@ -124,4 +146,27 @@
     cursor: pointer;
   }
 
-  
+  /* Animation for buttons when clicked */
+  @keyframes buttonClickAnimation {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+/* Update styles for "Already on T-Book Club? Sign in" link */
+.login-modal .already-member-link {
+    color: blue; /* Change the color to blue */
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 20px; /* Change the font size to 20px to match the other link */
+  }
+/* Стили для текста "Already on T-Book Club?" */
+.login-modal .already-member-text {
+    color: black; /* Изменяем цвет текста на черный */
+    font-size: 16px; /* Устанавливаем размер шрифта на 20 пикселей, чтобы совпадал с другой ссылкой */
+  }
