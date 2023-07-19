@@ -172,7 +172,7 @@
   }
 
 /* Add this CSS to your login.css file */
-.login-modal .login-error {
+.login-modal .field-error{
     color: red;
     font-size: 14px;
     margin-top: 5px;
@@ -183,3 +183,10 @@
     color: red;
     margin-top: 5px;
   }
+  
+.login-modal .login-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  

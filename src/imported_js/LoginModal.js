@@ -4,42 +4,64 @@ import '../css/login.css';
 const LoginModal = ({ isOpen, onClose }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [username, setUsername] = useState('');
-  const [registrationUsername, setRegistrationUsername] = useState('');
-  const [registrationEmail, setRegistrationEmail] = useState('');
-  const [registrationPassword, setRegistrationPassword] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // Local state variable for email input
-  const [localEmail, setLocalEmail] = useState('');
-  // State variable for login error
   const [loginError, setLoginError] = useState(false);
-  // State variable for email validation error
-  const [emailError, setEmailError] = useState(false);
+  const [joinEmailError, setJoinEmailError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleLogin = () => {
     // Regular expression for email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Validation for email and password fields
-    if (!localEmail.trim() || !password.trim()) {
+    if (!email.trim() || !password.trim()) {
       setLoginError(true);
-      setEmailError(false); // Reset email validation error
-    } else if (!emailPattern.test(localEmail)) {
+      setJoinEmailError(false);
+    } else if (!emailPattern.test(email)) {
       setLoginError(true);
-      setEmailError(true); // Set email validation error to true
+      setJoinEmailError(true);
       console.log('Invalid email format');
     } else {
       setLoginError(false);
-      setEmailError(false); // Reset email validation error
+      setJoinEmailError(false);
+      setPasswordError(false);
       // Handle login logic here...
-      console.log('Logged in with email:', localEmail);
+      console.log('Logged in with email:', email);
       console.log('Logged in with password:', password);
       onClose(); // Close the modal after successful login.
     }
   };
 
   const handleRegistration = () => {
-    // Handle registration logic...
+    // Reset all error states before validating
+    setNameError(false);
+    setJoinEmailError(false);
+    setPasswordError(false);
+
+    // Regular expression for email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validation for name field
+    if (!username.trim()) {
+      setNameError(true);
+      return;
+    }
+
+    // Validation for email field
+    if (!email.trim() || !emailPattern.test(email)) {
+      setJoinEmailError(true);
+      return;
+    }
+
+    // Validation for password field
+    if (!password.trim() || password.length < 8) {
+      setPasswordError(true);
+      return;
+    }
+
+    // All validations passed, handle registration logic
     console.log('Registered with username:', username);
     console.log('Registered with email:', email);
     console.log('Registered with password:', password);
@@ -48,18 +70,25 @@ const LoginModal = ({ isOpen, onClose }) => {
 
   // Function to reset the input fields to their initial state
   const resetInputFields = () => {
-    setLocalEmail('');
     setUsername('');
+    setEmail('');
     setPassword('');
-    setRegistrationUsername('');
-    setRegistrationEmail('');
-    setRegistrationPassword('');
+  };
+
+  // Function to handle modal close and reset input fields and error states
+  const handleCloseModal = () => {
+    resetInputFields();
+    setLoginError(false);
+    setJoinEmailError(false);
+    setNameError(false);
+    setPasswordError(false);
+    onClose();
   };
 
   // Event listener for beforeunload to reset input fields on modal close or page refresh
   useEffect(() => {
     const handleBeforeUnload = () => {
-      resetInputFields();
+      handleCloseModal();
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -72,13 +101,9 @@ const LoginModal = ({ isOpen, onClose }) => {
   // Event listener for closing the modal to reset input fields
   useEffect(() => {
     if (!isOpen) {
-      resetInputFields();
+      handleCloseModal();
     }
   }, [isOpen]);
-  // Update localEmail state whenever the email state changes
-  useEffect(() => {
-    setLocalEmail(email);
-  }, [email]);
 
   return (
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
@@ -96,15 +121,21 @@ const LoginModal = ({ isOpen, onClose }) => {
                   placeholder="Enter your name"
                 />
               </label>
+              {nameError && <p className="field-error">Please enter your name.</p>}
               <label>
                 Email:
                 <input
                   type="email"
-                  value={localEmail}
-                  onChange={(e) => setLocalEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                 />
               </label>
+              {joinEmailError && (
+                <p className={`field-error ${email.trim() === '' ? 'small-error' : ''}`}>
+                  {email.trim() === '' ? 'Please enter your email.' : 'Please enter a valid email address.'}
+                </p>
+              )}
               <label>
                 Password:
                 <input
@@ -114,6 +145,11 @@ const LoginModal = ({ isOpen, onClose }) => {
                   placeholder="Enter your password"
                 />
               </label>
+              {passwordError && (
+                <p className="field-error">
+                  {password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}
+                </p>
+              )}
             </>
           ) : (
             <>
@@ -121,11 +157,20 @@ const LoginModal = ({ isOpen, onClose }) => {
                 Email:
                 <input
                   type="email"
-                  value={localEmail}
-                  onChange={(e) => setLocalEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                 />
               </label>
+              {loginError && (
+                <p className={`login-error ${joinEmailError || passwordError ? 'login-error-small' : ''}`}>
+                  {joinEmailError
+                    ? 'Please enter a valid email address'
+                    : passwordError
+                    ? 'Password must be at least 8 characters long'
+                    : 'Please enter your email and password.'}
+                </p>
+              )}
               <label>
                 Password:
                 <input
@@ -135,14 +180,12 @@ const LoginModal = ({ isOpen, onClose }) => {
                   placeholder="Enter your password"
                 />
               </label>
+              {passwordError && (
+                <p className="field-error">
+                  {password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}
+                </p>
+              )}
             </>
-          )}
-          {loginError && (
-          <p className={`login-error ${emailError ? 'login-error-small' : ''}`}>
-            {emailError
-              ? 'Please enter a valid email address'
-              : 'Please enter your email and password.'}
-          </p>
           )}
           <div className="buttons-container">
             {isRegistrationModalOpen ? (
