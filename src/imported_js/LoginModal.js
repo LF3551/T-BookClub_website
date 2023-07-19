@@ -6,20 +6,24 @@ import '../css/login.css';
 const LoginModal = ({ isOpen, onClose }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [registrationUsername, setRegistrationUsername] = useState('');
   const [registrationEmail, setRegistrationEmail] = useState('');
   const [registrationPassword, setRegistrationPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Handle login logic...
-    console.log('Logged in with username:', username);
+    console.log('Logged in with email:', email);
+    console.log('Logged in with password:', password);
     onClose(); // Close the modal after successful login.
   };
 
   const handleRegistration = () => {
     // Handle registration logic...
-    console.log('Registered with username:', registrationUsername);
+    console.log('Registered with username:', username);
+    console.log('Registered with email:', email);
+    console.log('Registered with password:', password);
     setRegistrationModalOpen(false); // Close the registration modal after successful registration.
   };
 
@@ -57,41 +61,54 @@ const LoginModal = ({ isOpen, onClose }) => {
       <div className="join-modal">
         <div className="modal-content">
           <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={isRegistrationModalOpen ? registrationUsername : username}
-              onChange={(e) =>
-                isRegistrationModalOpen
-                  ? setRegistrationUsername(e.target.value)
-                  : setUsername(e.target.value)
-              }
-              placeholder="Enter your name"
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              value={isRegistrationModalOpen ? registrationPassword : password}
-              onChange={(e) =>
-                isRegistrationModalOpen
-                  ? setRegistrationPassword(e.target.value)
-                  : setPassword(e.target.value)
-              }
-              placeholder="Enter your password"
-            />
-          </label>
-          {isRegistrationModalOpen && (
+          {isRegistrationModalOpen ? (
+            <>
+              <label>
+                Name:
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your name"
+                />
+              </label>
+              <label>
+                Email:
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                />
+              </label>
+              <label>
+                Password:
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                />
+              </label>
+            </>
+          ) : (
             <>
               <label>
                 Email:
                 <input
                   type="email"
-                  value={registrationEmail}
-                  onChange={(e) => setRegistrationEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
+                />
+              </label>
+              <label>
+                Password:
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
                 />
               </label>
             </>
