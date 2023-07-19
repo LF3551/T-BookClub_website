@@ -1,5 +1,3 @@
-// LoginModal.js
-
 import React, { useState, useEffect } from 'react';
 import '../css/login.css';
 
@@ -15,13 +13,24 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [localEmail, setLocalEmail] = useState('');
   // State variable for login error
   const [loginError, setLoginError] = useState(false);
+  // State variable for email validation error
+  const [emailError, setEmailError] = useState(false);
 
   const handleLogin = () => {
+    // Regular expression for email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     // Validation for email and password fields
     if (!localEmail.trim() || !password.trim()) {
       setLoginError(true);
+      setEmailError(false); // Reset email validation error
+    } else if (!emailPattern.test(localEmail)) {
+      setLoginError(true);
+      setEmailError(true); // Set email validation error to true
+      console.log('Invalid email format');
     } else {
       setLoginError(false);
+      setEmailError(false); // Reset email validation error
       // Handle login logic here...
       console.log('Logged in with email:', localEmail);
       console.log('Logged in with password:', password);
@@ -128,7 +137,13 @@ const LoginModal = ({ isOpen, onClose }) => {
               </label>
             </>
           )}
-          {loginError && <p className="login-error">Please enter your email and password.</p>}
+          {loginError && (
+          <p className={`login-error ${emailError ? 'login-error-small' : ''}`}>
+            {emailError
+              ? 'Please enter a valid email address'
+              : 'Please enter your email and password.'}
+          </p>
+          )}
           <div className="buttons-container">
             {isRegistrationModalOpen ? (
               <>

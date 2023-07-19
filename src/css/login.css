@@ -177,3 +177,9 @@
     font-size: 14px;
     margin-top: 5px;
   }
+
+.login-error-small {
+    font-size: 12px;
+    color: red;
+    margin-top: 5px;
+  }
