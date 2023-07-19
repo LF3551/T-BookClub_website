@@ -6,8 +6,11 @@ import './css/buttons.css';
 import './css/login.css';
 import RanksTable from './imported_js/RanksTable';
 import LoginModal from './imported_js/LoginModal';
+import readEnvFile from './imported_js/readEnvFile';
 import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
@@ -70,7 +73,15 @@ function App() {
 
   const fetchHallOfFameData = async () => {
     try {
-      const response = await fetch("https://t-book-club-server-lf3551.vercel.app/hall-of-fame");
+      // const dotenv = require('dotenv');
+      // const dotenvConfig = {
+      //   path: '../.env'
+      // };
+      // dotenv.config(dotenvConfig);
+      // console.log(process.env.KEYS_JSON);
+      // console.log(process.env.REACT_APP_API_URL);
+      const serverurl = readEnvFile();
+      const response = await fetch(serverurl);
       const data = await response.json();
       setHallOfFameData(data);
     } catch (error) {
