@@ -10,7 +10,6 @@ import readEnvFile from './imported_js/readEnvFile';
 import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
 import 'firebase/auth';
-const firebase = require('firebase/app');
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
