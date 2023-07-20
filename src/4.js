@@ -1,33 +1,52 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
+const admin = require('firebase-admin');
+const dotenv = require('dotenv');
+const fs = require('fs');
 
-// Настройте конфигурацию Firebase с использованием ключей из вашего проекта Firebase
-const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'YOUR_PROJECT_ID',
-  // Другие настройки Firebase...
-};
+// Путь к вашему локальному файлу с ключами сервисного аккаунта
+const localServiceAccountPath = '../keys.json';
 
-// Инициализируйте Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Функция для проверки наличия пользователя с email и паролем
-const checkUserWithEmailAndPassword = async (email, password) => {
+// Функция для проверки наличия файла
+function checkFileExists(filePath) {
   try {
-    // Аутентификация с email и паролем
-    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-    
-    // Если аутентификация успешна, пользователь существует
-    const user = userCredential.user;
-    console.log('User exists:', user);
-    return true;
-  } catch (error) {
-    // Если возникла ошибка, пользователя с таким email и паролем не существует
-    console.error('User does not exist or authentication failed:', error);
+    return fs.existsSync(filePath);
+  } catch (err) {
     return false;
   }
-};
+}
+
+// Если файл локального сервисного аккаунта существует, используем его
+if (checkFileExists(localServiceAccountPath)) {
+  const serviceAccount = require(localServiceAccountPath);
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://telegram-bots-379310.firebaseio.com' // Замените на URL вашего проекта Firebase
+  });
+} else {
+  // Если файл не найден, используем переменную окружения
+  dotenv.config();
+
+  const serviceAccount = process.env.KEYS_JSON;
+
+  admin.initializeApp({
+    credential: admin.credential.cert(JSON.parse(serviceAccount)),
+    databaseURL: 'https://telegram-bots-379310.firebaseio.com' // Замените на URL вашего проекта Firebase
+  });
+}
+
+const checkUserWithEmailAndPassword = async (email, password) => {
+    try {
+      const userCredential = await admin.auth().getUserByEmail(email);
+      // Если пользователь существует, аутентифицируйте его с предоставленным паролем
+      await admin.auth().signInWithEmailAndPassword(email, password);
+      console.log('User exists:', userCredential.toJSON());
+      return true;
+    } catch (error) {
+      // Если возникла ошибка, пользователя с таким email и паролем не существует
+      console.error('User does not exist or authentication failed:', error);
+      return false;
+    }
+  };
 
 // Вызов функции проверки пользователя
 const email = 'user@example.com'; // Замените на email пользователя
