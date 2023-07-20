@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/login.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import axios from 'axios';
 
 const LoginModal = ({ isOpen, onClose }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
@@ -12,31 +13,75 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [joinEmailError, setJoinEmailError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isEmailAndPasswordValid, setIsEmailAndPasswordValid] = useState(false);
 
-  const handleLogin = () => {
+const handleLogin = async () => {
     // Regular expression for email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    
+    // Reset error states
+    setLoginError(false);
+    setJoinEmailError(false);
+    setPasswordError(false);
+    setIsEmailAndPasswordValid(true);
+  
     // Validation for email and password fields
-    if (!email.trim() || !password.trim()) {
-      setLoginError(true);
-      setJoinEmailError(false);
-    } else if (!emailPattern.test(email)) {
+    if (!email.trim() && !password.trim()) {
+      setIsEmailAndPasswordValid(false);
       setLoginError(true);
       setJoinEmailError(true);
-      console.log('Invalid email format');
-    } else {
-      setLoginError(false);
-      setJoinEmailError(false);
-      setPasswordError(false);
-      // Handle login logic here...
-      console.log('Logged in with email:', email);
-      console.log('Logged in with password:', password);
-      onClose(); // Close the modal after successful login.
+      setPasswordError(true);
+      setErrorMessage('Please enter your email and password.');
+      return;
+    } else if (!email.trim()) {
+      setIsEmailAndPasswordValid(false);
+      setLoginError(true);
+      setJoinEmailError(true);
+      setErrorMessage('Please enter your email.');
+      return;
+    } else if (!password.trim()) {
+      setIsEmailAndPasswordValid(false);
+      setLoginError(true);
+      setPasswordError(true);
+      setErrorMessage('Please enter your password.');
+      return;
+    } else if (!emailPattern.test(email)) {
+      setIsEmailAndPasswordValid(false);
+      setLoginError(true);
+      setJoinEmailError(true);
+      setErrorMessage('Invalid email format.');
+      return;
+    }
+  
+    try {
+      const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
+        email: email,
+        password: password,
+      });
+  
+      if (response.data.success) {
+        // Аутентификация успешна
+        onClose(); // Закрываем модальное окно после успешной аутентификации
+        // Здесь вы можете выполнить необходимые действия для авторизации пользователя в React приложении.
+      } else {
+        // Аутентификация не удалась, отображаем сообщение об ошибке
+        setErrorMessage('Invalid email or password'); // Здесь можно использовать сообщение об ошибке с сервера, если оно есть
+        setLoginError(true);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      // Обработка ошибок, если запрос к серверу не удался
+      setErrorMessage('Login failed. Please try again later.');
+      setLoginError(true);
     }
   };
+  
+  
+  
+  
 
-  const handleRegistration = () => {
+  const handleRegistration = async () => {
     // Reset all error states before validating
     setNameError(false);
     setJoinEmailError(false);
@@ -67,6 +112,20 @@ const LoginModal = ({ isOpen, onClose }) => {
     console.log('Registered with username:', username);
     console.log('Registered with email:', email);
     console.log('Registered with password:', password);
+    try {
+      const response = await axios.post(process.env.REACT_APP_REGISTER_URL, {
+        name: username,
+        email: email,
+        password: password,
+      });
+
+      console.log('Registered with username:', username);
+      console.log('Registered with email:', email);
+      console.log('Registered with password:', password);
+      setRegistrationModalOpen(false); // Закрываем модальное окно после успешной регистрации
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
     setRegistrationModalOpen(false); // Close the registration modal after successful registration.
   };
 
@@ -166,12 +225,12 @@ const LoginModal = ({ isOpen, onClose }) => {
               </label>
               {loginError && (
                 <p className={`login-error ${joinEmailError || passwordError ? 'login-error-small' : ''}`}>
-                  {joinEmailError
-                    ? 'Please enter a valid email address'
-                    : passwordError
-                    ? 'Password must be at least 8 characters long'
-                    : 'Please enter your email and password.'}
-                </p>
+                {joinEmailError
+                  ? 'Please enter a valid email address'
+                  : passwordError
+                  ? 'Password must be at least 8 characters long'
+                  : errorMessage}
+              </p>
               )}
               <label>
                 Password:
