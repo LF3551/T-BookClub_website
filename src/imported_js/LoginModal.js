@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/login.css';
 import 'firebase/auth';
 import axios from 'axios';
+import firebase from 'firebase/app';
 
 const LoginModal = ({ isOpen, onClose }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
@@ -77,6 +78,8 @@ const handleLogin = async () => {
         // Аутентификация успешна
         setIsLoggedIn(true);
         setLoggedInUsername(response.data.username); // Assuming the server returns the username upon successful login
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('loggedInUsername', response.data.username);
         onClose(); // Закрываем модальное окно после успешной аутентификации
         // Здесь вы можете выполнить необходимые действия для авторизации пользователя в React приложении.
       } else {
