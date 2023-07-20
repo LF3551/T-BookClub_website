@@ -11,7 +11,7 @@ import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
+const firebase = require('firebase/app');
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
