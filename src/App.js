@@ -9,8 +9,9 @@ import LoginModal from './imported_js/LoginModal';
 import readEnvFile from './imported_js/readEnvFile';
 import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
