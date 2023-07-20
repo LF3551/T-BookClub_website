@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './css/BookDiscussionsPage.css';
 import ImagePreviewModal from './imported_js/ImagePreviewModal'; 
+import readEnvFile from './imported_js/readEnvFile';
 
 // Заглушка для недоступного изображения
 const placeholderImage = 'URL_К_ЗАГЛУШКЕ'; // Замените на URL изображения заглушки
@@ -17,7 +18,8 @@ function BookDiscussionsPage() {
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch('https://t-book-club-server-lf3551.vercel.app/hall-of-fame');
+      const serverurl = readEnvFile();
+      const response = await fetch(serverurl);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
