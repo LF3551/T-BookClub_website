@@ -124,7 +124,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={images.t_logo} className="App-logo" alt="logo" draggable="false" />
-<button onClick={() => setShowLoginModal(true)}>Login</button>
+
 
       {/* Модальное окно для логина */}
       {isLoggedIn ? (
