@@ -161,6 +161,7 @@ const handleLogin = async () => {
     setPassword('');
   };
 
+  
   // Function to handle modal close and reset input fields and error states
   const handleCloseModal = () => {
     resetInputFields();
