@@ -26,6 +26,21 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const aboutRanksRef = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  const [loggedInUsername, setLoggedInUsername] = useState(localStorage.getItem('loggedInUsername') || '');
+  const handleLogin = () => {
+    // Открываем модальное окно для логина
+    setShowLoginModal(true);
+  };
+  
+  const handleLogout = () => {
+    // Выход из системы
+    setIsLoggedIn(false);
+    setLoggedInUsername('');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('loggedInUsername');
+  };
+  
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -112,7 +127,20 @@ function App() {
 <button onClick={() => setShowLoginModal(true)}>Login</button>
 
       {/* Модальное окно для логина */}
-      
+      {isLoggedIn ? (
+        <>
+          {/* Пользователь залогинен, показываем приветствие и кнопку Logout */}
+          <h1 className="welcome-text">
+            Приветствие, {loggedInUsername}!
+          </h1>
+          <button onClick={handleLogout}>Logout</button>
+        </>
+      ) : (
+        <>
+          {/* Пользователь не залогинен, показываем кнопку Login */}
+          <button onClick={handleLogin}>Login</button>
+        </>
+      )}
       <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
         <h1 className="welcome-text">
           <span className="club-name">Welcome to the T-Book Club</span>

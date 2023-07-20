@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../css/login.css';
 import 'firebase/auth';
 import axios from 'axios';
-import firebase from 'firebase/app';
 
 const LoginModal = ({ isOpen, onClose }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
@@ -78,8 +77,6 @@ const handleLogin = async () => {
         // Аутентификация успешна
         setIsLoggedIn(true);
         setLoggedInUsername(response.data.username); // Assuming the server returns the username upon successful login
-        localStorage.setItem('isLoggedIn', true);
-        localStorage.setItem('loggedInUsername', response.data.username);
         onClose(); // Закрываем модальное окно после успешной аутентификации
         // Здесь вы можете выполнить необходимые действия для авторизации пользователя в React приложении.
       } else {
@@ -194,137 +191,122 @@ const handleLogin = async () => {
     }
   }, [isOpen]);
 
-
-  
-    return (
-      <div className={`login-modal ${isOpen ? 'open' : ''}`}>
-        <div className="join-modal">
-          <div className="modal-content">
-            {isLoggedIn ? (
+  return (
+    <div className={`login-modal ${isOpen ? 'open' : ''}`}>
+      <div className="join-modal">
+        <div className="modal-content">
+          
+          <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
+          {isRegistrationModalOpen ? (
+            <>
+              <label>
+                Name:
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your name"
+                />
+              </label>
+              {nameError && <p className="field-error">Please enter your name.</p>}
+              <label>
+                Email:
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                />
+              </label>
+              {joinEmailError && (
+                <p className={`field-error ${email.trim() === '' ? 'small-error' : ''}`}>
+                  {email.trim() === '' ? 'Please enter your email.' : 'Please enter a valid email address.'}
+                </p>
+              )}
+              <label>
+                Password:
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                />
+              </label>
+              {passwordError && (
+                <p className="field-error">
+                  {password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <label>
+                Email:
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                />
+              </label>
+              {loginError && (
+                <p className={`login-error ${joinEmailError || passwordError ? 'login-error-small' : ''}`}>
+                {joinEmailError
+                  ? 'Please enter a valid email address'
+                  : passwordError
+                  ? 'Password must be at least 8 characters long'
+                  : errorMessage}
+              </p>
+              )}
+              <label>
+                Password:
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                />
+              </label>
+              {passwordError && (
+                <p className="field-error">
+                  {password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}
+                </p>
+              )}
+            </>
+          )}
+          <div className="buttons-container">
+            {isRegistrationModalOpen ? (
               <>
-                <h2>Welcome to the T-Book Club, {loggedInUsername}!</h2>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={handleRegistration}>Join</button>
               </>
             ) : (
               <>
-                <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
-                {isRegistrationModalOpen ? (
-                  <>
-                    <label>
-                      Name:
-                      <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Enter your name"
-                      />
-                    </label>
-                    {nameError && <p className="field-error">Please enter your name.</p>}
-                    <label>
-                      Email:
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                      />
-                    </label>
-                    {joinEmailError && (
-                      <p className={`field-error ${email.trim() === '' ? 'small-error' : ''}`}>
-                        {email.trim() === '' ? 'Please enter your email.' : 'Please enter a valid email address.'}
-                      </p>
-                    )}
-                    <label>
-                      Password:
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
-                      />
-                    </label>
-                    {passwordError && (
-                      <p className="field-error">
-                        {password.trim() === ''
-                          ? 'Please enter your password.'
-                          : 'Password must be at least 8 characters long.'}
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <label>
-                      Email:
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                      />
-                    </label>
-                    {loginError && (
-                      <p className={`login-error ${joinEmailError || passwordError ? 'login-error-small' : ''}`}>
-                        {joinEmailError
-                          ? 'Please enter a valid email address'
-                          : passwordError
-                          ? 'Password must be at least 8 characters long'
-                          : errorMessage}
-                      </p>
-                    )}
-                    <label>
-                      Password:
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
-                      />
-                    </label>
-                    {passwordError && (
-                      <p className="field-error">
-                        {password.trim() === ''
-                          ? 'Please enter your password.'
-                          : 'Password must be at least 8 characters long.'}
-                      </p>
-                    )}
-                  </>
-                )}
-                <div className="buttons-container">
-                  {isRegistrationModalOpen ? (
-                    <>
-                      <button onClick={handleRegistration}>Join</button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={handleLogin}>Login</button>
-                      <button onClick={onClose}>Close</button>
-                    </>
-                  )}
-                </div>
-                <p>
-                  {isRegistrationModalOpen ? (
-                    <>
-                      <span className="already-member-text">Already on T-Book Club? </span>
-                      <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}>
-                        Sign in
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="not-member-link">Not a member of T-Book Club? </span>
-                      <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}>
-                        Join now!
-                      </span>
-                    </>
-                  )}
-                </p>
+                <button onClick={handleLogin}>Login</button>
+                <button onClick={onClose}>Close</button>
               </>
             )}
           </div>
+          <p>
+            {isRegistrationModalOpen ? (
+              <>
+                <span className="already-member-text">Already on T-Book Club? </span>
+                <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}>
+                  Sign in
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="not-member-link">Not a member of T-Book Club? </span>
+                <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}>
+                  Join now!
+                </span>
+              </>
+            )}
+          </p>
         </div>
       </div>
-    );
-  };
-  
-  export default LoginModal;
-  
+    </div>
+  );
+};
+
+export default LoginModal;
