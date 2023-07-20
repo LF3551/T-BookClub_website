@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/login.css';
-import firebase from 'firebase/app';
 import 'firebase/auth';
 import axios from 'axios';
 
