@@ -9,7 +9,8 @@ import LoginModal from './imported_js/LoginModal';
 import readEnvFile from './imported_js/readEnvFile';
 import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 
 const rankImages = {};
