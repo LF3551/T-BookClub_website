@@ -5,7 +5,7 @@ import ImagePreviewModal from './imported_js/ImagePreviewModal';
 import readEnvFile from './imported_js/readEnvFile';
 
 // Заглушка для недоступного изображения
-const placeholderImage = 'URL_К_ЗАГЛУШКЕ'; // Замените на URL изображения заглушки
+const placeholderImage = 'https://i.postimg.cc/vZ23MXnd/istockphoto-1193046540-612x612.jpg'; // Замените на URL изображения заглушки
 
 function BookDiscussionsPage() {
   const [books, setBooks] = useState([]);
