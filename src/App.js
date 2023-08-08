@@ -12,6 +12,15 @@ import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+function shuffleArray(array) {
+  let shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 
 const rankImages = {};
 for (let i = 1; i <= 10; i++) {
@@ -19,8 +28,8 @@ for (let i = 1; i <= 10; i++) {
 }
 
 function App() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [hallOfFameData, setHallOfFameData] = useState([]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [expandedUser, setExpandedUser] = useState(null);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -61,9 +70,7 @@ function App() {
   }, []);
 
 
-  useEffect(() => {
-    fetchHallOfFameData();
-  }, []);
+
 
   useEffect(() => {
     const handleClickOutsideAboutRanks = (event) => {
@@ -87,23 +94,30 @@ function App() {
     };
   }, [aboutRanksRef]);
 
-  const fetchHallOfFameData = async () => {
-    try {
-      // const dotenv = require('dotenv');
-      // const dotenvConfig = {
-      //   path: '../.env'
-      // };
-      // dotenv.config(dotenvConfig);
-      // console.log(process.env.KEYS_JSON);
-      // console.log(process.env.REACT_APP_API_URL);
-      const serverurl = readEnvFile();
-      const response = await fetch(serverurl);
-      const data = await response.json();
-      setHallOfFameData(data);
-    } catch (error) {
-      console.error('Error fetching hall of fame data:', error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const serverurl = readEnvFile();
+        const response = await fetch(serverurl);
+        const data = await response.json();
+
+        const sortedAndShuffledData = [];
+        const maxRank = 10;
+        for (let i = maxRank; i >= 1; i--) {
+          const usersOfThisRank = data.filter(user => user['Появления'] === i);
+          sortedAndShuffledData.push(...shuffleArray(usersOfThisRank));
+        }
+
+        setHallOfFameData(sortedAndShuffledData);
+      } catch (error) {
+        console.error('Error fetching hall of fame data:', error);
+      }
+    };
+
+    fetchData();
+}, []);
+
+
 
   const handleBookButtonClick = (user) => {
     if (expandedUser === user) {
@@ -116,8 +130,6 @@ function App() {
   const handleImageClick = (image) => {
     setSelectedImage(image);
   };
-
-  const sortedData = hallOfFameData.sort((a, b) => b['Появления'] - a['Появления']);
 
 
   return (
@@ -173,7 +185,7 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {sortedData.map((user, index) => (
+          {hallOfFameData.map((user, index) => (
               <React.Fragment key={index}>
                 <tr>
                   <td>
