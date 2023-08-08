@@ -3,6 +3,7 @@ import '../css/login.css';
 import 'firebase/auth';
 import axios from 'axios';
 
+
 const LoginModal = ({ isOpen, onClose }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [username, setUsername] = useState('');
@@ -162,7 +163,7 @@ const handleLogin = async () => {
   };
 
 
-  
+
   // Function to handle modal close and reset input fields and error states
   const handleCloseModal = () => {
     resetInputFields();
@@ -197,7 +198,6 @@ const handleLogin = async () => {
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
       <div className="join-modal">
         <div className="modal-content">
-          
           <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
           {isRegistrationModalOpen ? (
             <>

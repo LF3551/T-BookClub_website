@@ -190,3 +190,8 @@
     margin-top: 5px;
   }
   
+  .login-section {
+    display: flex;
+    align-items: center; /* Чтобы элементы выровнялись по центру вертикали */
+    gap: 10px; /* Для добавления промежутка между элементами */
+  }

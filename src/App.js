@@ -100,7 +100,6 @@ function App() {
         const serverurl = readEnvFile();
         const response = await fetch(serverurl);
         const data = await response.json();
-
         const sortedAndShuffledData = [];
         const maxRank = 10;
         for (let i = maxRank; i >= 1; i--) {
@@ -136,15 +135,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={images.t_logo} className="App-logo" alt="logo" draggable="false" />
-
-
       {/* Модальное окно для логина */}
       {isLoggedIn ? (
         <>
           {/* Пользователь залогинен, показываем приветствие и кнопку Logout */}
-          <h1 className="welcome-text">
-            Приветствие, {loggedInUsername}!
-          </h1>
+          <h1 className="welcome-text">Приветствие, {loggedInUsername}!</h1>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (
@@ -154,55 +149,25 @@ function App() {
         </>
       )}
       <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
-        <h1 className="welcome-text">
-          <span className="club-name">Welcome to the T-Book Club</span>
-        </h1>
-        <Link to="/book-discussions" className="previous-discussions-button">
-          Discussed books
-        </Link>
+        <h1 className="welcome-text"><span className="club-name">Welcome to the T-Book Club</span></h1>
+        <Link to="/book-discussions" className="previous-discussions-button">Discussed books</Link>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
-          <img
-            src={images.aboutRanksImage}
-            alt="About Ranks"
-            className="about-ranks-image"
-            draggable="false"
-            onClick={() => setShowAboutPopup((prevState) => !prevState)}
-            ref={aboutRanksRef}
-          />
+          <img src={images.aboutRanksImage} alt="About Ranks" className="about-ranks-image" draggable="false" onClick={() => setShowAboutPopup((prevState) => !prevState)} ref={aboutRanksRef} />
         </div>
 
         <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th className="speaker-header">Speaker</th>
-              <th>
-                <div className="column-header">
-                  <div className="header-content">Books</div>
-                </div>
-              </th>
-            </tr>
-          </thead>
+          <thead><tr><th>Rank</th><th className="speaker-header">Speaker</th><th><div className="column-header"><div className="header-content">Books</div></div></th></tr></thead>
           <tbody>
           {hallOfFameData.map((user, index) => (
               <React.Fragment key={index}>
                 <tr>
                   <td>
-                    <img
-                      src={rankImages[user['Появления']]}
-                      alt={`Rank ${user['Появления']}`}
-                      className="rank-icon"
-                      width="50"
-                      draggable="false"
-                    />
+                    <img src={rankImages[user['Появления']]} alt={`Rank ${user['Появления']}`} className="rank-icon" width="50" draggable="false" />
                   </td>
                   <td className="speaker-column">{user['Пользователь']}</td>
                   <td>
-                    <button
-                      onClick={() => handleBookButtonClick(user)}
-                      className={`book-button ${expandedUser === user ? 'expanded' : ''}`}
-                    >
+                    <button onClick={() => handleBookButtonClick(user)} className={`book-button ${expandedUser === user ? 'expanded' : ''}`} >
                       <img src={images.bookbutton} alt="Book of user" width="30" draggable="false" />
                     </button>
                   </td>
@@ -214,17 +179,8 @@ function App() {
                         {user['Книги_Авторы'].map((bookAuthor, index) => (
                           <li key={index} className={`book-info ${expandedUser === user ? 'expanded' : ''}`}>
                             <div className="book-info-item">
-                              <div className="book-details">
-                                <span className="book-title">Book: {bookAuthor.Книга}</span>
-                                <span className="book-author">Author: {bookAuthor.Автор}</span>
-                              </div>
-                              <div className="book-image-container">
-                                <img
-                                  src={bookAuthor.Изображение}
-                                  alt={`Image: ${bookAuthor.Книга}`}
-                                  onClick={() => handleImageClick(bookAuthor.Изображение)}
-                                />
-                              </div>
+                              <div className="book-details"><span className="book-title">Book: {bookAuthor.Книга}</span><span className="book-author">Author: {bookAuthor.Автор}</span></div>
+                              <div className="book-image-container"><img src={bookAuthor.Изображение} alt={`Image: ${bookAuthor.Книга}`} onClick={() => handleImageClick(bookAuthor.Изображение)}/></div>
                             </div>
                           </li>
                         ))}
@@ -238,23 +194,11 @@ function App() {
         </table>
 
         {showAboutPopup && (
-          <div className="about-popup-container">
-            <div className="about-popup">
-              <div className="popup-content">
-                <div className="about-popup-content">
-                  <RanksTable />
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="about-popup-container"><div className="about-popup"><div className="popup-content"><div className="about-popup-content"><RanksTable /></div></div></div></div>
         )}
 
         {selectedImage && (
-          <div className="image-modal" onClick={() => setSelectedImage(null)}>
-            <div className="image-modal-content">
-              <img src={selectedImage} alt="Selected Image" />
-            </div>
-          </div>
+          <div className="image-modal" onClick={() => setSelectedImage(null)}><div className="image-modal-content"><img src={selectedImage} alt="Selected Image" /></div></div>
         )}
       </header>
       <Footer />
