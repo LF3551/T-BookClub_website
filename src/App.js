@@ -11,6 +11,7 @@ import Footer from './imported_js/Footer';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import handleLogin from './imported_js/loginService';
 
 function shuffleArray(array) {
   let shuffled = [...array];
@@ -37,6 +38,8 @@ function App() {
   const aboutRanksRef = useRef(null);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [loggedInUsername, setLoggedInUsername] = useState(localStorage.getItem('loggedInUsername') || '');
+  const [username, setUsername] = useState('');
+  
   const handleLogin = () => {
     // Открываем модальное окно для логина
     setShowLoginModal(true);
@@ -49,7 +52,13 @@ function App() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('loggedInUsername');
   };
-  
+  const handleLoginSuccess = (username) => {
+    setIsLoggedIn(true);
+    setLoggedInUsername(username);
+    setShowLoginModal(false);
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('loggedInUsername', username);
+};
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -137,18 +146,18 @@ function App() {
         <img src={images.t_logo} className="App-logo" alt="logo" draggable="false" />
       {/* Модальное окно для логина */}
       {isLoggedIn ? (
-        <>
-          {/* Пользователь залогинен, показываем приветствие и кнопку Logout */}
-          <h1 className="welcome-text">Приветствие, {loggedInUsername}!</h1>
-          <button onClick={handleLogout}>Logout</button>
-        </>
+        <div className="greeting-container">
+        <span className="greeting-text">Hello, {loggedInUsername}!</span>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
+     </div>
       ) : (
         <>
           {/* Пользователь не залогинен, показываем кнопку Login */}
           <button onClick={handleLogin}>Login</button>
         </>
       )}
-      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} onLoginSuccess={handleLoginSuccess} />
+
         <h1 className="welcome-text"><span className="club-name">Welcome to the T-Book Club</span></h1>
         <Link to="/book-discussions" className="previous-discussions-button">Discussed books</Link>
         <p>Our Hall of Fame</p>

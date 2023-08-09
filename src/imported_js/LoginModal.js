@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import '../css/login.css';
 import 'firebase/auth';
 import axios from 'axios';
+import handleLogin from './loginService';
 
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose,onLoginSuccess }) => {
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -30,68 +31,6 @@ const LoginModal = ({ isOpen, onClose }) => {
     }
   }, []);
 
-const handleLogin = async () => {
-    // Regular expression for email validation
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    // Reset error states
-    setLoginError(false);
-    setJoinEmailError(false);
-    setPasswordError(false);
-    setIsEmailAndPasswordValid(true);
-  
-    // Validation for email and password fields
-    if (!email.trim() && !password.trim()) {
-      setIsEmailAndPasswordValid(false);
-      setLoginError(true);
-      setJoinEmailError(true);
-      setPasswordError(true);
-      setErrorMessage('Please enter your email and password.');
-      return;
-    } else if (!email.trim()) {
-      setIsEmailAndPasswordValid(false);
-      setLoginError(true);
-      setJoinEmailError(true);
-      setErrorMessage('Please enter your email.');
-      return;
-    } else if (!password.trim()) {
-      setIsEmailAndPasswordValid(false);
-      setLoginError(true);
-      setPasswordError(true);
-      setErrorMessage('Please enter your password.');
-      return;
-    } else if (!emailPattern.test(email)) {
-      setIsEmailAndPasswordValid(false);
-      setLoginError(true);
-      setJoinEmailError(true);
-      setErrorMessage('Invalid email format.');
-      return;
-    }
-  
-    try {
-      const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
-        email: email,
-        password: password,
-      });
-  
-      if (response.data.success) {
-        // Аутентификация успешна
-        setIsLoggedIn(true);
-        setLoggedInUsername(response.data.username); // Assuming the server returns the username upon successful login
-        onClose(); // Закрываем модальное окно после успешной аутентификации
-        // Здесь вы можете выполнить необходимые действия для авторизации пользователя в React приложении.
-      } else {
-        // Аутентификация не удалась, отображаем сообщение об ошибке
-        setErrorMessage('Invalid email or password'); // Здесь можно использовать сообщение об ошибке с сервера, если оно есть
-        setLoginError(true);
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      // Обработка ошибок, если запрос к серверу не удался
-      setErrorMessage('Login failed. Please try again later.');
-      setLoginError(true);
-    }
-  };
   
   const handleLogout = () => {
     // Logout logic
@@ -101,11 +40,6 @@ const handleLogin = async () => {
     localStorage.removeItem('loggedInUsername');
   };
   
-
-
-
-
-
 
   const handleRegistration = async () => {
     // Reset all error states before validating
@@ -133,21 +67,12 @@ const handleLogin = async () => {
       setPasswordError(true);
       return;
     }
-
-    // All validations passed, handle registration logic
-    console.log('Registered with username:', username);
-    console.log('Registered with email:', email);
-    console.log('Registered with password:', password);
     try {
       const response = await axios.post(process.env.REACT_APP_REGISTER_URL, {
         name: username,
         email: email,
         password: password,
       });
-
-      console.log('Registered with username:', username);
-      console.log('Registered with email:', email);
-      console.log('Registered with password:', password);
       setRegistrationModalOpen(false); // Закрываем модальное окно после успешной регистрации
     } catch (error) {
       console.error('Registration error:', error);
@@ -155,16 +80,12 @@ const handleLogin = async () => {
     setRegistrationModalOpen(false); // Close the registration modal after successful registration.
   };
 
-  // Function to reset the input fields to their initial state
   const resetInputFields = () => {
     setUsername('');
     setEmail('');
     setPassword('');
   };
 
-
-
-  // Function to handle modal close and reset input fields and error states
   const handleCloseModal = () => {
     resetInputFields();
     setLoginError(false);
@@ -174,7 +95,6 @@ const handleLogin = async () => {
     onClose();
   };
 
-  // Event listener for beforeunload to reset input fields on modal close or page refresh
   useEffect(() => {
     const handleBeforeUnload = () => {
       handleCloseModal();
@@ -187,13 +107,15 @@ const handleLogin = async () => {
     };
   }, []);
 
-  // Event listener for closing the modal to reset input fields
   useEffect(() => {
     if (!isOpen) {
       handleCloseModal();
     }
   }, [isOpen]);
 
+  const onLoginClick = () => {
+    handleLogin(email, password, setLoginError, setJoinEmailError,setErrorMessage, setPasswordError, setIsEmailAndPasswordValid, setIsLoggedIn, onLoginSuccess, setLoggedInUsername, onClose);
+};
   return (
     <div className={`login-modal ${isOpen ? 'open' : ''}`}>
       <div className="join-modal">
@@ -201,56 +123,20 @@ const handleLogin = async () => {
           <h2>{isRegistrationModalOpen ? 'Join T-Book Club' : 'Login'}</h2>
           {isRegistrationModalOpen ? (
             <>
-              <label>
-                Name:
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your name"
-                />
-              </label>
+              <label>Name: <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter your name" /></label>
               {nameError && <p className="field-error">Please enter your name.</p>}
-              <label>
-                Email:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                />
-              </label>
+              <label>Email: <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" /></label>
               {joinEmailError && (
-                <p className={`field-error ${email.trim() === '' ? 'small-error' : ''}`}>
-                  {email.trim() === '' ? 'Please enter your email.' : 'Please enter a valid email address.'}
-                </p>
+                <p className={`field-error ${email.trim() === '' ? 'small-error' : ''}`}>{email.trim() === '' ? 'Please enter your email.' : 'Please enter a valid email address.'}</p>
               )}
-              <label>
-                Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                />
-              </label>
+              <label>Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password"/></label>
               {passwordError && (
-                <p className="field-error">
-                  {password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}
-                </p>
+                <p className="field-error">{password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}</p>
               )}
             </>
           ) : (
             <>
-              <label>
-                Email:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                />
-              </label>
+              <label>Email: <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email"/></label>
               {loginError && (
                 <p className={`login-error ${joinEmailError || passwordError ? 'login-error-small' : ''}`}>
                 {joinEmailError
@@ -260,19 +146,9 @@ const handleLogin = async () => {
                   : errorMessage}
               </p>
               )}
-              <label>
-                Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                />
-              </label>
+              <label>Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password"/></label>
               {passwordError && (
-                <p className="field-error">
-                  {password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}
-                </p>
+                <p className="field-error">{password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}</p>
               )}
             </>
           )}
@@ -283,7 +159,7 @@ const handleLogin = async () => {
               </>
             ) : (
               <>
-                <button onClick={handleLogin}>Login</button>
+                <button onClick={onLoginClick}>Login</button>
                 <button onClick={onClose}>Close</button>
               </>
             )}
@@ -292,16 +168,12 @@ const handleLogin = async () => {
             {isRegistrationModalOpen ? (
               <>
                 <span className="already-member-text">Already on T-Book Club? </span>
-                <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}>
-                  Sign in
-                </span>
+                <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}> Sign in </span>
               </>
             ) : (
               <>
                 <span className="not-member-link">Not a member of T-Book Club? </span>
-                <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}>
-                  Join now!
-                </span>
+                <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}> Join now! </span>
               </>
             )}
           </p>
