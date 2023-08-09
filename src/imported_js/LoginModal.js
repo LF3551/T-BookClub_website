@@ -19,6 +19,21 @@ const LoginModal = ({ isOpen, onClose,onLoginSuccess }) => {
   // State to keep track of user authentication
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUsername, setLoggedInUsername] = useState('');
+  const [registrationSuccessMessage, setRegistrationSuccessMessage] = useState('');
+
+  
+  useEffect(() => {
+    // Если есть сообщение об ошибке или сообщение об успешной регистрации, запустите таймер
+    if (errorMessage || registrationSuccessMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage('');  // очистить сообщение об ошибке
+        setRegistrationSuccessMessage('');  // очистить сообщение об успешной регистрации
+      }, 3000);  // 3 секунды
+  
+      // Это будет выполнено при "размонтировании" компонента или при следующем рендере
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage, registrationSuccessMessage]);
 
   useEffect(() => {
     // Check if the user is already logged in (using localStorage)
@@ -73,11 +88,19 @@ const LoginModal = ({ isOpen, onClose,onLoginSuccess }) => {
         email: email,
         password: password,
       });
-      setRegistrationModalOpen(false); // Закрываем модальное окно после успешной регистрации
+      if (response.data.success) {
+        setRegistrationSuccessMessage(response.data.message);
+      } else {
+        setErrorMessage(response.data.error);
+      }
+      setTimeout(() => {
+        setRegistrationSuccessMessage('');
+        setErrorMessage('');
+      }, 3000);
     } catch (error) {
       console.error('Registration error:', error);
+      setErrorMessage("User already exists" || "Something went wrong. Please try again later.");
     }
-    setRegistrationModalOpen(false); // Close the registration modal after successful registration.
   };
 
   const resetInputFields = () => {
@@ -133,6 +156,7 @@ const LoginModal = ({ isOpen, onClose,onLoginSuccess }) => {
               {passwordError && (
                 <p className="field-error">{password.trim() === '' ? 'Please enter your password.' : 'Password must be at least 8 characters long.'}</p>
               )}
+              {registrationSuccessMessage ? (<p className="success-message">{registrationSuccessMessage}</p>) : (errorMessage && <p className="error-message">{errorMessage}</p>)}
             </>
           ) : (
             <>
@@ -168,12 +192,12 @@ const LoginModal = ({ isOpen, onClose,onLoginSuccess }) => {
             {isRegistrationModalOpen ? (
               <>
                 <span className="already-member-text">Already on T-Book Club? </span>
-                <span className="already-member-link" onClick={() => setRegistrationModalOpen(false)}> Sign in </span>
+                <span className="already-member-link" onClick={() => {setRegistrationModalOpen(false); resetInputFields() }}> Sign in </span>
               </>
             ) : (
               <>
                 <span className="not-member-link">Not a member of T-Book Club? </span>
-                <span className="join-now-link" onClick={() => setRegistrationModalOpen(true)}> Join now! </span>
+                <span className="join-now-link" onClick={() => {setRegistrationModalOpen(true); resetInputFields(); }}> Join now! </span>
               </>
             )}
           </p>
