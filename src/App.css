@@ -216,7 +216,7 @@ table {
 }
 
 .image-modal-content img {
-  width: 100%;
+  width: 45vw; /* это будет 10% от ширины вьюпорта */
   height: 100%;
   object-fit: contain;
 }
