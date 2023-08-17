@@ -164,7 +164,7 @@ const LoginModal = ({ isOpen, onClose,onLoginSuccess }) => {
               {loginError && (
                 <p className={`login-error ${joinEmailError || passwordError ? 'login-error-small' : ''}`}>
                 {joinEmailError
-                  ? 'Please enter a valid email address'
+                  ? 'Check entered email, password, or verification.'
                   : passwordError
                   ? 'Password must be at least 8 characters long'
                   : errorMessage}

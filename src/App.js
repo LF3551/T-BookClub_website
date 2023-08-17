@@ -153,7 +153,10 @@ function App() {
       ) : (
         <>
           {/* Пользователь не залогинен, показываем кнопку Login */}
-          <button onClick={handleLogin}>Login</button>
+          {/* <button onClick={handleLogin}>Login</button> */}   
+          {/* тут кнопка на будущее в доработке пока там есть все и логин и регистрация но на почту отбивка по токенам приходит с ошибкой
+          и я не нашел нужного провайдера почты .. но если отключить токены то пользователь сможет авторизоваться 
+          в будущем доделаю */}
         </>
       )}
       <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} onLoginSuccess={handleLoginSuccess} />
