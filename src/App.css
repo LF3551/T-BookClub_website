@@ -190,6 +190,7 @@ table {
   max-width: 10px; /* Укажите желаемый максимальный размер миниатюры */
   max-height: 10px;
   object-fit: contain;
+  
 }
 
 .book-image-container img {
@@ -247,6 +248,7 @@ table {
   flex-grow: 1;
   margin-right: 10px;
   border-right: 1px solid rgb(0, 0, 0); /* Белая граница справа */
+  margin-bottom: 2px;
 }
 
 .book-info {
@@ -261,6 +263,7 @@ table {
   max-height: 100px; /* Задайте нужную максимальную высоту для раскрытого состояния */
   opacity: 1;
   transition: max-height 0.6s ease-in, opacity 0.6s ease-in;
+  
 }
 
 .welcome-text {
@@ -290,4 +293,76 @@ table {
 
 .previous-discussions-button:hover {
   background-color: #555;
+}
+.book-video-link {
+  display: block; 
+  width: fit-content;
+  cursor: pointer;
+  margin-top: 5px; 
+  margin-left: 0;
+  transition: opacity 0.3s; 
+  
+  font-size: 14px;
+  color: #007BFF; /* голубой цвет, как обычно у ссылок */
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 1px 1px;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 2px 5px;
+  
+}
+
+.book-video-link:hover, .book-presentation-link:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.presentation-container {
+  display: block;
+  margin-top: 5px;
+  
+}
+
+
+.book-presentation-link {
+  display: inline-block; 
+  cursor: pointer;
+  transition: opacity 0.3s;
+
+  font-size: 14px;
+  color: #007BFF;
+  text-decoration: none;
+  padding: 2px 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 5px;  /* Добавьте небольшой отступ слева от слова "Download" */
+}
+
+.book-presentation-link:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.presentation-container {
+  display: block;
+  margin-top: 5px;
+  width: 100%;
+  clear: both;
+}
+
+.book-links {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.book-presentation-link {
+  color: rgb(215, 135, 187); /* розовый цвет */
+  margin-left: 0;
+}
+
+.book-presentation-link:hover {
+  background-color: rgb(144, 76, 120); /* розовый цвет при наведении */
+  color: #fff;
 }

@@ -191,7 +191,15 @@ function App() {
                         {user['Книги_Авторы'].map((bookAuthor, index) => (
                           <li key={index} className={`book-info ${expandedUser === user ? 'expanded' : ''}`}>
                             <div className="book-info-item">
-                              <div className="book-details"><span className="book-title">Book: {bookAuthor.Книга}</span><span className="book-author">Author: {bookAuthor.Автор}</span></div>
+                              <div className="book-details"><span className="book-title">Book: {bookAuthor.Книга}</span><span className="book-author">Author: {bookAuthor.Автор}</span>
+                              <div className="book-links">
+                              {bookAuthor.Видеоссылка && (
+                                  <a href={bookAuthor.Видеоссылка} target="_blank" rel="noopener noreferrer" className="book-video-link">Watch video</a>
+                              )}</div>
+                                {bookAuthor.Презентация && (
+        <a href={bookAuthor.Презентация} target="_blank" rel="noopener noreferrer" className="book-presentation-link">Download</a>
+    )}
+    </div>
                               <div className="book-image-container"><img src={bookAuthor.Изображение} alt={`Image: ${bookAuthor.Книга}`} onClick={() => handleImageClick(bookAuthor.Изображение)}/></div>
                             </div>
                           </li>
