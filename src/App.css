@@ -211,13 +211,13 @@ table {
 }
 
 .image-modal-content {
-  max-width: 40%;
-  max-height: 40%;
+  max-width: 90%;
+  max-height: 80vh; 
 }
 
 .image-modal-content img {
-  width: 45vw; /* это будет 10% от ширины вьюпорта */
-  height: 100%;
+  max-width: 100%;
+  max-height: 80vh;
   object-fit: contain;
 }
 
