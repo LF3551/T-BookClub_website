@@ -162,7 +162,10 @@ function App() {
       <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} onLoginSuccess={handleLoginSuccess} />
 
         <h1 className="welcome-text"><span className="club-name">Welcome to the T-Book Club</span></h1>
-        <Link to="/book-discussions" className="previous-discussions-button">Discussed books</Link>
+        <div className="buttons-container">
+          <Link to="/book-discussions" className="previous-discussions-button">Discussed books</Link>
+          <Link to="/future-events" className="previous-discussions-button">Future Events</Link>
+        </div>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
           <img src={images.aboutRanksImage} alt="About Ranks" className="about-ranks-image" draggable="false" onClick={() => setShowAboutPopup((prevState) => !prevState)} ref={aboutRanksRef} />

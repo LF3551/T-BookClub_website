@@ -1,0 +1,28 @@
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .future-events-title {
+    color: #fff;
+    text-align: center;
+    /* Добавьте любые другие стили, которые вы хотели бы применить */
+  }
+
+  .future-events-back-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 20px auto 5mm;
+    width: fit-content;
+}
+  
+  .future-events-back-button:hover {
+    background-color: #999;
+  }
+  
