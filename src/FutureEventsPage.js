@@ -22,6 +22,12 @@ function FutureEventsPage() {
           console.error('Error fetching future events:', error);
         }
       };
+      const sortedEvents = [...events].sort((a, b) => {
+        const dateA = new Date(a.Date);
+        const dateB = new Date(b.Date);
+    
+        return dateA - dateB;  // Это упорядочит события по возрастанию даты.
+    });
     
       return (
         <div className="future-events-page">
@@ -31,7 +37,7 @@ function FutureEventsPage() {
             </h1>
           </header>
           <div className="events-content" style={{ color: 'white' }}>
-            {events.map((event, index) => (
+            {sortedEvents.map((event, index) => (
                 <div key={index} className="event-item" style={{ color: 'white' }}>
                     <h2 style={{ color: 'white' }}>{event.Date}</h2>
                     <ul style={{ color: 'white' }}>
