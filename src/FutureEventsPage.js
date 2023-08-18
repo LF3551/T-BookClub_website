@@ -11,12 +11,13 @@ function FutureEventsPage() {
       }, []);
     const fetchEvents = async () => {
         try {
-          const serverurl = `${readEnvFile2()}/future_events`; // Добавьте соответствующий путь к вашему серверу
-          console.log(serverurl)
-          const response = await fetch(serverurl);
-          const data = await response.json();
-          console.log(data)
-          setEvents(data);
+            const serverurl2 = readEnvFile2();
+            console.log(serverurl2)
+            const response = await fetch(serverurl2);
+         
+            const data = await response.json();
+            console.log(data)
+            setEvents(data);
         } catch (error) {
           console.error('Error fetching future events:', error);
         }
