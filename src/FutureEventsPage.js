@@ -22,12 +22,15 @@ function FutureEventsPage() {
           console.error('Error fetching future events:', error);
         }
       };
-      const sortedEvents = [...events].sort((a, b) => {
+    const currentDate = new Date();
+    const sortedEvents = [...events].sort((a, b) => {
         const dateA = new Date(a.Date);
         const dateB = new Date(b.Date);
-    
-        return dateA - dateB;  // Это упорядочит события по возрастанию даты.
+        return dateB - dateA;  // Это упорядочит события по убыванию даты.
     });
+    const pastEvents = sortedEvents.filter(event => new Date(event.Date) < currentDate);
+    const futureEvents = sortedEvents.filter(event => new Date(event.Date) >= currentDate);
+
     
       return (
         <div className="future-events-page">
@@ -37,7 +40,7 @@ function FutureEventsPage() {
             </h1>
           </header>
           <div className="events-content" style={{ color: 'white' }}>
-            {sortedEvents.map((event, index) => (
+            {futureEvents.map((event, index) => (
                 <div key={index} className="event-item" style={{ color: 'white' }}>
                     <h2 style={{ color: 'white' }}>{event.Date}</h2>
                     <ul style={{ color: 'white' }}>
