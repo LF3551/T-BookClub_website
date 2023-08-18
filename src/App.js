@@ -166,7 +166,7 @@ function App() {
         <h1 className="welcome-text"><span className="club-name">Welcome to the T-Book Club</span></h1>
         <div className="buttons-container">
         <Link to="/book-discussions" className="previous-discussions-button"><div className="link-content"><img src={library} alt="Library Icon" className="library-icon" />Discussed books</div></Link>
-        <Link to="/future-events" className="previous-discussions-button"><div className="link-content"><img src={calendar} alt="Calendar Icon" className="library-icon" />Future Events</div></Link>
+        <Link to="/future-events" className="previous-discussions-button"><div className="link-content"><img src={calendar} alt="Calendar Icon" className="library-icon" />Future events</div></Link>
         </div>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">
