@@ -40,7 +40,7 @@ function FutureEventsPage() {
             </h1>
           </header>
           <div className="events-content" style={{ color: 'white' }}>
-            {futureEvents.map((event, index) => (
+            {sortedEvents.map((event, index) => (
                 <div key={index} className="event-item" style={{ color: 'white' }}>
                     <h2 style={{ color: 'white' }}>{event.Date}</h2>
                     <ul style={{ color: 'white' }}>
