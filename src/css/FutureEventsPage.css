@@ -88,6 +88,7 @@
   color: white;
   vertical-align: top;
   text-align: center;
+  
 }
 
 .event-discussion {
@@ -106,4 +107,17 @@
 .language-icon {
   width: 35%;
   background-color: transparent;
+}
+
+.calendar-icon,
+.library-icon {
+    width: 20px; /* или любой другой размер, который вы хотели бы использовать */
+    height: auto; /* сохранять пропорции иконки */
+    margin-top: 10px;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center; 
+  width: 100%; 
 }

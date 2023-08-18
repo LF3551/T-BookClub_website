@@ -4,6 +4,8 @@ import './css/FutureEventsPage.css';
 import readEnvFile2 from './imported_js/readEnvFile2';
 import enImage from './images/en.png';
 import ruImage from './images/ru.png';
+import library from './images/library.png';
+import calendar from './images/calendar.png';
 
 function FutureEventsPage() {
     const [events, setEvents] = useState([]);
@@ -55,7 +57,7 @@ function FutureEventsPage() {
                         <tbody>
                             {event.Events.map((e, idx) => (
                                 <tr key={idx}>
-                                    <td className="event-title"><strong>{e.Title}</strong></td>
+                                    <td className="event-title"><strong>{e.Title}</strong><div className="icon-container"><img src={calendar} alt="Calendar Icon" className="calendar-icon" /></div></td>
                                     <td className="event-discussion">{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} className="discussion-item">{discussionItem.trim()}</div>))}</td>
                                     <td className="event-language"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></td>
                                 </tr>
@@ -75,7 +77,7 @@ function FutureEventsPage() {
                 <tbody>
                     {event.Events.map((e, idx) => (
                         <tr key={idx}>
-                            <td className="event-title"><strong>{e.Title}</strong></td>
+                            <td className="event-title"><strong>{e.Title}</strong><div className="icon-container"><img src={library} alt="Library Icon" className="library-icon" /></div></td>
                             <td className="event-discussion">{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} className="discussion-item">{discussionItem.trim()}</div>))}</td>
                             <td className="event-language"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></td>
                         </tr>
