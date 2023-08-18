@@ -55,9 +55,9 @@ function FutureEventsPage() {
                         <tbody>
                             {event.Events.map((e, idx) => (
                                 <tr key={idx}>
-                                    <td style={{ color: 'white', verticalAlign: 'top', textAlign: 'center' }}><strong>{e.Title}</strong></td>
-                                    <td style={{ color: 'white' }}>{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} style={{ marginBottom: '3mm' }}>{discussionItem.trim()}</div>))}</td>
-                                    <td style={{ textAlign: 'center', verticalAlign: 'top', textAlign: 'center' }}><img src={languageToImage[e.Language]} alt={e.Language} style={{ width: '35%', backgroundColor: 'transparent' }} /></td>
+                                    <td className="event-title"><strong>{e.Title}</strong></td>
+                                    <td className="event-discussion">{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} className="discussion-item">{discussionItem.trim()}</div>))}</td>
+                                    <td className="event-language"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -75,9 +75,9 @@ function FutureEventsPage() {
                 <tbody>
                     {event.Events.map((e, idx) => (
                         <tr key={idx}>
-                            <td style={{ color: 'white', verticalAlign: 'top', textAlign: 'center' }}><strong>{e.Title}</strong></td>
-                            <td style={{ color: 'white' }}>{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} style={{ marginBottom: '3mm' }}>{discussionItem.trim()}</div>))}</td>
-                            <td style={{ textAlign: 'center', verticalAlign: 'top', textAlign: 'center' }}><img src={languageToImage[e.Language]} alt={e.Language} style={{ width: '35%', backgroundColor: 'transparent' }} /></td>
+                            <td className="event-title"><strong>{e.Title}</strong></td>
+                            <td className="event-discussion">{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} className="discussion-item">{discussionItem.trim()}</div>))}</td>
+                            <td className="event-language"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></td>
                         </tr>
                     ))}
                 </tbody>

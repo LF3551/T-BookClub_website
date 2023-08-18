@@ -79,5 +79,31 @@
     padding: 5px; /* уменьшаем отступ в ячейках таблицы */
   }
 
-  /* добавьте другие стили для адаптации контента под мобильные устройства */
+
+}
+
+
+
+.event-title {
+  color: white;
+  vertical-align: top;
+  text-align: center;
+}
+
+.event-discussion {
+  color: white;
+}
+
+.discussion-item {
+  margin-bottom: 3mm;
+}
+
+.event-language {
+  text-align: center;
+  vertical-align: top;
+}
+
+.language-icon {
+  width: 35%;
+  background-color: transparent;
 }
