@@ -30,20 +30,20 @@ function FutureEventsPage() {
               <span className="club-name">Future Events</span>
             </h1>
           </header>
-          <div className="events-content">
+          <div className="events-content" style={{ color: 'white' }}>
             {events.map((event, index) => (
-              <div key={index} className="event-item">
-                <h2>{event.Date}</h2>
-                <ul>
-                  {event.Events.map((e, idx) => (
-                    <li key={idx}>
-                      <strong>{e.Title}</strong> - {e.Discussion} ({e.Language})
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div key={index} className="event-item" style={{ color: 'white' }}>
+                    <h2 style={{ color: 'white' }}>{event.Date}</h2>
+                    <ul style={{ color: 'white' }}>
+                        {event.Events.map((e, idx) => (
+                            <li key={idx} style={{ color: 'white' }}>
+                                <strong style={{ color: 'white' }}>{e.Title}</strong> - {e.Discussion} ({e.Language})
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             ))}
-          </div>
+        </div>
           <Link to="/" className="future-events-back-button">Back</Link>
         </div>
       );

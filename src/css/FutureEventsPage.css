@@ -25,4 +25,6 @@
   .future-events-back-button:hover {
     background-color: #999;
   }
-  
+  .future-events-page, .future-events-page * {
+    color: white;
+}
