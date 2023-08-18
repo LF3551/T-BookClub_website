@@ -121,3 +121,16 @@
   justify-content: center; 
   width: 100%; 
 }
+.lang-container {
+  display: flex;
+  justify-content: center; 
+
+}
+
+.title-container {
+  display: flex;       /* использование flex для расположения элементов в строке */
+  align-items: center; /* центрирование элементов по вертикали */
+  justify-content: start; /* выравнивание элементов по началу контейнера */
+  gap: 10px;           /* расстояние между названием и иконкой */
+  flex-wrap: wrap;
+}

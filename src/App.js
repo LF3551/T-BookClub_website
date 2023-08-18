@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import handleLogin from './imported_js/loginService';
+import library from './images/library.png';
+import calendar from './images/calendar.png';
 
 function shuffleArray(array) {
   let shuffled = [...array];
@@ -163,8 +165,8 @@ function App() {
 
         <h1 className="welcome-text"><span className="club-name">Welcome to the T-Book Club</span></h1>
         <div className="buttons-container">
-          <Link to="/book-discussions" className="previous-discussions-button">Discussed books</Link>
-          <Link to="/future-events" className="previous-discussions-button">Future Events</Link>
+        <Link to="/book-discussions" className="previous-discussions-button"><div className="link-content"><img src={library} alt="Library Icon" className="library-icon" />Discussed books</div></Link>
+        <Link to="/future-events" className="previous-discussions-button"><div className="link-content"><img src={calendar} alt="Calendar Icon" className="library-icon" />Future Events</div></Link>
         </div>
         <p>Our Hall of Fame</p>
         <div ref={aboutRanksRef} className="about-ranks-container">

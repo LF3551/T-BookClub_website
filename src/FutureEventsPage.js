@@ -57,9 +57,9 @@ function FutureEventsPage() {
                         <tbody>
                             {event.Events.map((e, idx) => (
                                 <tr key={idx}>
-                                    <td className="event-title"><strong>{e.Title}</strong><div className="icon-container"><img src={calendar} alt="Calendar Icon" className="calendar-icon" /></div></td>
+                                    <td className="event-title"><div className="title-container"><strong>{e.Title}</strong><img src={calendar} alt="Calendar Icon" className="calendar-icon" /></div></td>
                                     <td className="event-discussion">{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} className="discussion-item">{discussionItem.trim()}</div>))}</td>
-                                    <td className="event-language"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></td>
+                                    <td className="event-language"><div className="lang-container"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></div></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -77,9 +77,9 @@ function FutureEventsPage() {
                 <tbody>
                     {event.Events.map((e, idx) => (
                         <tr key={idx}>
-                            <td className="event-title"><strong>{e.Title}</strong><div className="icon-container"><img src={library} alt="Library Icon" className="library-icon" /></div></td>
+                            <td className="event-title"><div className="title-container"><strong>{e.Title}</strong><img src={library} alt="Library Icon" className="library-icon" /></div></td>
                             <td className="event-discussion">{e.Discussion.split(';').map((discussionItem, dIdx) => (<div key={dIdx} className="discussion-item">{discussionItem.trim()}</div>))}</td>
-                            <td className="event-language"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></td>
+                            <td className="event-language"><div className="lang-container"><img src={languageToImage[e.Language]} alt={e.Language} className="language-icon" /></div></td>
                         </tr>
                     ))}
                 </tbody>

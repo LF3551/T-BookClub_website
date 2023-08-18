@@ -283,16 +283,12 @@ table {
 
 .previous-discussions-button {
   display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 0.625em;
+  padding: 0.325em 0.95em;
   background-color: #333;
   color: #fff;
   text-decoration: none;
-  border-radius: 5px;
-}
-
-.previous-discussions-button:hover {
-  background-color: #555;
+  border-radius: 0.65em;
 }
 .book-video-link {
   display: block; 
@@ -365,4 +361,16 @@ table {
 .book-presentation-link:hover {
   background-color: rgb(144, 76, 120); /* розовый цвет при наведении */
   color: #fff;
+}
+.library-icon {
+  width: 1.25em;
+  height: 1.25em;
+  margin-right: 0.3125em;  /* отступ справа от иконки */
+  
+}
+.library-icon .link-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625em; /* добавляет пробел между иконкой и текстом */
 }

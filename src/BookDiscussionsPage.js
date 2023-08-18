@@ -39,10 +39,9 @@ function BookDiscussionsPage() {
   return (
     <div className="book-discussions-page">
       <header className="app-header">
-        <h1 className="welcome-text" style={{ color: 'white' }}>
-          <span className="club-name">Books we already discussed!</span>
-        </h1>
+        <h1 className="welcome-text" style={{ color: 'white' }}><span className="club-name">Books we already discussed!</span></h1>
       </header>
+      <Link to="/" className="book-discussions-back-button">Back</Link>
       <div className="discussion-content">
         <div className="book-list book-discussions-center-images">
           <div className="book-info-grid book-discussions-grid">
