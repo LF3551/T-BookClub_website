@@ -27,7 +27,7 @@
   /* Style for the book images */
   .book-discussions-image {
     width: 100%; /* Set the width to 100% to ensure images are of the same size */
-    height: 150px; /* Set a fixed height for all images initially */
+    height: auto; /* Set a fixed height for all images initially */
     object-fit: cover; /* Scale the image to cover the container while maintaining aspect ratio */
     cursor: pointer; /* Show pointer cursor when hovering over images */
   }
