@@ -374,3 +374,7 @@ table {
   justify-content: center;
   gap: 0.625em; /* добавляет пробел между иконкой и текстом */
 }
+.book-button:active {
+  transform: scale(0.92); /* Уменьшает размер кнопки на 5% при нажатии */
+  transition: transform 0.1s; /* Плавное изменение размера */
+}
